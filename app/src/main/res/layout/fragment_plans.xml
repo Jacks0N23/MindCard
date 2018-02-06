@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
-    tools:context="ru.andrroider.apps.mindcard.plans.PlansActivityFragment"
+    tools:context="ru.andrroider.apps.mindcard.plans.PlansFragment"
     tools:showIn="@layout/activity_plans">
 
     <android.support.v7.widget.RecyclerView

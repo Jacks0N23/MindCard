@@ -11,9 +11,10 @@ import ru.andrroider.apps.data.ViewTyped
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.base.BaseMVPFragment
 import ru.andrroider.apps.mindcard.di.AppComponentInjector
+import ru.andrroider.apps.mindcard.plans.creation.NewPlanFragment
 import ru.andrroider.apps.mindcard.widget.recyclerView.Adapter
 
-class PlansActivityFragment : BaseMVPFragment(), PlansView {
+class PlansFragment : BaseMVPFragment(), PlansView {
     override val layoutId: Int = R.layout.fragment_plans
     private val plansItems = mutableListOf<ViewTyped>()
     private val adapter = Adapter<PlanUi>(plansItems, holderFactory = PlansHolderFactory())
@@ -28,7 +29,11 @@ class PlansActivityFragment : BaseMVPFragment(), PlansView {
         plansList.adapter = adapter
         presenter.loadAllPlans()
         fab.setOnClickListener { _ ->
-            presenter.addNewItem()
+            fragmentManager?.beginTransaction()
+                    ?.replace(R.id.fragmentContainer, NewPlanFragment())
+                    ?.addToBackStack("")
+                    ?.commit()
+//            presenter.addNewItem()
         }
     }
 
