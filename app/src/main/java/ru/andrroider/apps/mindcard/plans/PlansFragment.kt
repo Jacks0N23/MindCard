@@ -1,7 +1,6 @@
 package ru.andrroider.apps.mindcard.plans
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -11,7 +10,7 @@ import ru.andrroider.apps.data.ViewTyped
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.base.BaseMVPFragment
 import ru.andrroider.apps.mindcard.di.AppComponentInjector
-import ru.andrroider.apps.mindcard.plans.creation.NewPlanFragment
+import ru.andrroider.apps.mindcard.plans.creation.startNewPlanActivity
 import ru.andrroider.apps.mindcard.widget.recyclerView.Adapter
 
 class PlansFragment : BaseMVPFragment(), PlansView {
@@ -23,18 +22,12 @@ class PlansFragment : BaseMVPFragment(), PlansView {
     lateinit var presenter: PlansPresenter
 
     @ProvidePresenter
-    fun providePresenter(): PlansPresenter = AppComponentInjector.component().presenter()
+    fun providePresenter(): PlansPresenter = AppComponentInjector.component().planPresenter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         plansList.adapter = adapter
         presenter.loadAllPlans()
-        fab.setOnClickListener { _ ->
-            fragmentManager?.beginTransaction()
-                    ?.replace(R.id.fragmentContainer, NewPlanFragment())
-                    ?.addToBackStack("")
-                    ?.commit()
-//            presenter.addNewItem()
-        }
+        fab.setOnClickListener { activity?.let { startNewPlanActivity(it) } }
     }
 
     override fun showPlans(plans: List<PlanUi>) {
@@ -43,8 +36,7 @@ class PlansFragment : BaseMVPFragment(), PlansView {
         adapter.notifyDataSetChanged()
     }
 
-    override fun showError(t: Throwable) {
-        Snackbar.make(container, "Возникла ошибка", Snackbar.LENGTH_INDEFINITE)
-        t.printStackTrace()
+    override fun showError(throwable: Throwable) {
+        showErrorWithSnackbar(throwable)
     }
 }

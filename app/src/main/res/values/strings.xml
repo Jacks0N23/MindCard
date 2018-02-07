@@ -4,4 +4,8 @@
     <string name="title">Название</string>
     <string name="description">Описание</string>
     <string name="short_description">Описание</string>
+    <string name="title_error">Пожалуйста придумайте название</string>
+    <string name="save">Сохранить?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

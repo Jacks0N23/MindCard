@@ -5,6 +5,8 @@ import android.widget.TextView
 import ru.andrroider.apps.business.plans.PlanUi
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.extentions.findView
+import ru.andrroider.apps.mindcard.extentions.hide
+import ru.andrroider.apps.mindcard.extentions.show
 import ru.andrroider.apps.mindcard.widget.recyclerView.BaseViewHolder
 
 /**
@@ -17,6 +19,11 @@ class PlanViewHolder(view: View) : BaseViewHolder<PlanUi>(view) {
 
     override fun bind(item: PlanUi) {
         title.text = item.title
-        description.text = item.description
+        if (item.description.isNotBlank()) {
+            description.show()
+            description.text = item.description
+        } else {
+            description.hide()
+        }
     }
 }

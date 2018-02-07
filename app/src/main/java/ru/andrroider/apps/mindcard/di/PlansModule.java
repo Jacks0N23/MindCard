@@ -7,6 +7,7 @@ import ru.andrroider.apps.business.plans.GetPlansInteractor;
 import ru.andrroider.apps.data.db.PlansDao;
 import ru.andrroider.apps.mindcard.plans.PlansPresenter;
 import ru.andrroider.apps.mindcard.plans.PlansToPlanUI;
+import ru.andrroider.apps.mindcard.plans.creation.NewPlanPresenter;
 
 /**
  * Created by Jackson on 05/02/2018.
@@ -30,8 +31,12 @@ public class PlansModule {
 
     @Provides
     @ApplicationContext
-    PlansPresenter providePlansPresenter(GetPlansInteractor getPlansInteractor,
-                                         AddPlanInteractor addPlanInteractor) {
-        return new PlansPresenter(getPlansInteractor, addPlanInteractor);
+    static PlansPresenter providePlansPresenter(GetPlansInteractor getPlansInteractor) {
+        return new PlansPresenter(getPlansInteractor);
+    }
+
+    @Provides
+    NewPlanPresenter provideNewPlanPresenter(AddPlanInteractor addPlanInteractor) {
+        return new NewPlanPresenter(addPlanInteractor);
     }
 }

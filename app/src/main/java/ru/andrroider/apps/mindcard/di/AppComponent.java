@@ -6,9 +6,12 @@ package ru.andrroider.apps.mindcard.di;
 
 import dagger.Component;
 import ru.andrroider.apps.mindcard.plans.PlansPresenter;
+import ru.andrroider.apps.mindcard.plans.creation.NewPlanPresenter;
 
 @ApplicationContext
 @Component(modules = {AppModule.class, DatabaseModule.class, PlansModule.class})
 public interface AppComponent {
-    PlansPresenter presenter();
+    PlansPresenter planPresenter();
+
+    NewPlanPresenter newPlanPresenter();
 }

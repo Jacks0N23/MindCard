@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,26 +16,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/new_plan_background"
-            android:paddingBottom="48dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="24dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize" />
+
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/planTitleContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:textColorHint="@color/white">
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColorHint="@color/white"
+                app:errorEnabled="true">
 
                 <EditText
                     android:id="@+id/planTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/title"
-                    tools:text="очень длинное тестовое название"
                     android:inputType="textCapSentences|textMultiLine"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    tools:text="очень длинное тестовое название" />
             </android.support.design.widget.TextInputLayout>
         </android.support.design.widget.AppBarLayout>
 
@@ -56,7 +61,7 @@
                 android:src="@drawable/ic_description" />
 
             <EditText
-                android:id="@+id/planBody"
+                android:id="@+id/planDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/short_description"
@@ -66,7 +71,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_save_plan"
+        android:id="@+id/savePlan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

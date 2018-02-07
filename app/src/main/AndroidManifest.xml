@@ -3,12 +3,12 @@
     package="ru.andrroider.apps.mindcard">
 
     <application
+        android:name=".MindCardApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".MindCardApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -20,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".plans.creation.NewPlanActivity"
+            android:windowSoftInputMode="stateVisible" />
     </application>
 
 </manifest>

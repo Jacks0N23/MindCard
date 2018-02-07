@@ -8,5 +8,5 @@ import ru.andrroider.apps.business.plans.PlanUi
  */
 interface PlansView : MvpView {
     fun showPlans(plans: List<PlanUi>)
-    fun showError(t: Throwable)
+    fun showError(throwable: Throwable)
 }
