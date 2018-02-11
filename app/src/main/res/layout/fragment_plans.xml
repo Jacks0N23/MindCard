@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
-    tools:context="ru.andrroider.apps.mindcard.plans.PlansFragment"
-    tools:showIn="@layout/activity_plans">
+    tools:context="ru.andrroider.apps.mindcard.plans.PlansFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/plansList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager" />
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_plan"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

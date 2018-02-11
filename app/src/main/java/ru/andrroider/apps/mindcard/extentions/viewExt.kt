@@ -16,9 +16,6 @@ fun ViewGroup.inflate(@LayoutRes layout: Int, attachToRoot: Boolean = false): Vi
     return LayoutInflater.from(context).inflate(layout, this, attachToRoot)
 }
 
-inline fun <T : View> View.findView(@IdRes id: Int): T = findViewById(
-        id)
-
 fun View.show() {
     visibility = View.VISIBLE
 }
