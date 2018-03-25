@@ -16,7 +16,7 @@ open class BaseMvpPresenter<VIEW: MvpView> : MvpPresenter<VIEW>() {
         compositeDisposable.add(disposable)
     }
     override fun onDestroy() {
-        if (compositeDisposable.isDisposed) {
+        if (!compositeDisposable.isDisposed) {
             compositeDisposable.dispose()
         }
         super.onDestroy()

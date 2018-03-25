@@ -2,9 +2,8 @@ package ru.andrroider.apps.mindcard.plans
 
 import android.view.View
 import android.widget.TextView
+import kotlinx.android.synthetic.main.item_plan.view.*
 import ru.andrroider.apps.business.plans.PlanUi
-import ru.andrroider.apps.mindcard.R
-import ru.andrroider.apps.mindcard.extentions.findView
 import ru.andrroider.apps.mindcard.extentions.hide
 import ru.andrroider.apps.mindcard.extentions.show
 import ru.andrroider.apps.mindcard.widget.recyclerView.BaseViewHolder
@@ -14,8 +13,8 @@ import ru.andrroider.apps.mindcard.widget.recyclerView.BaseViewHolder
  */
 class PlanViewHolder(view: View, onCardClickListener: (View) -> Unit) : BaseViewHolder<PlanUi>(view) {
 
-    private val title: TextView = view.findView(R.id.planTitle)
-    private val description: TextView = view.findView(R.id.planDescription)
+    private val title: TextView = view.planTitle
+    private val description: TextView = view.planDescription
 
     init {
         itemView.setOnClickListener(onCardClickListener)
