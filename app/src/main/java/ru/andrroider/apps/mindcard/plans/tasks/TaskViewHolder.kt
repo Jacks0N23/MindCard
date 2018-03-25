@@ -1,18 +1,15 @@
-package ru.andrroider.apps.mindcard.plans
+package ru.andrroider.apps.mindcard.plans.tasks
 
 import android.view.View
 import android.widget.TextView
-import ru.andrroider.apps.business.plans.PlanUi
+import ru.andrroider.apps.business.plans.TaskUi
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.extentions.findView
 import ru.andrroider.apps.mindcard.extentions.hide
 import ru.andrroider.apps.mindcard.extentions.show
 import ru.andrroider.apps.mindcard.widget.recyclerView.BaseViewHolder
 
-/**
- * Created by Jackson on 03/02/2018.
- */
-class PlanViewHolder(view: View, onCardClickListener: (View) -> Unit) : BaseViewHolder<PlanUi>(view) {
+class TaskViewHolder(view: View, onCardClickListener: (View) -> Unit) : BaseViewHolder<TaskUi>(view) {
 
     private val title: TextView = view.findView(R.id.planTitle)
     private val description: TextView = view.findView(R.id.planDescription)
@@ -21,7 +18,7 @@ class PlanViewHolder(view: View, onCardClickListener: (View) -> Unit) : BaseView
         itemView.setOnClickListener(onCardClickListener)
     }
 
-    override fun bind(item: PlanUi) {
+    override fun bind(item: TaskUi) {
         title.text = item.title
         itemView.tag = item.id
         if (item.description.isNotBlank()) {

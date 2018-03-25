@@ -13,8 +13,8 @@ import ru.andrroider.apps.mindcard.base.BaseMvpPresenter
 @InjectViewState
 class NewPlanPresenter(private val addPlanInteractor: AddPlanInteractor) : BaseMvpPresenter<NewPlanView>() {
 
-    fun addNewItem(title: String, description: String) {
-        val plan = Plans(title, description)
+    fun addNewItem(title: String, description: String, planId: Long = -1) {
+        val plan = Plans(title, description, if (planId == -1L) null else planId)
         addSubscription(addPlanInteractor(plan).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ viewState.finishAfterCreation() },

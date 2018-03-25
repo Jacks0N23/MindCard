@@ -2,6 +2,7 @@ package ru.andrroider.apps.data.db
 
 import android.arch.persistence.room.*
 import io.reactivex.Flowable
+import org.intellij.lang.annotations.Language
 
 /**
  * Created by Jackson on 03/02/2018.
@@ -10,21 +11,27 @@ import io.reactivex.Flowable
 @Entity(tableName = "plans")
 data class Plans(
         val title: String,
-        val description: String) {
+        val description: String, val planId: Long?) {
 
     @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
+    var id: Long = 0L
 }
 
 @Dao
 interface PlansDao {
 
-    @Query("SELECT * FROM plans")
+    @Language("RoomSql")
+    @Query("SELECT * FROM plans where planId IS NULL ")
     fun getAllPlans(): Flowable<List<Plans>>
 
     @Insert
     fun insert(person: Plans)
+
+    @Language("RoomSql")
+    @Query("SELECT * FROM plans where planId=:planId")
+    fun getTasksByPlanId(planId: Long?): Flowable<List<Plans>>
+
 }
 
 

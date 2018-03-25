@@ -21,50 +21,11 @@ class EmptyView(override val viewType: Int) : ViewTyped
 
 class EmptyViewHolder(itemView: View) : BaseViewHolder<EmptyView>(itemView)
 
-interface PageAdapter {
-    val items: MutableList<ViewTyped>
-    val adapter: AdapterCallbacks
-
-    fun showLoader() {
-        items.add(LoadMoreItem)
-        adapter.notifyItemInserted(items.size)
-    }
-
-    fun hideLoader() {
-        removeLoader()
-        adapter.notifyDataSetChanged()
-    }
-
-    fun addItems(newItems: List<ViewTyped>) {
-        if (newItems.isEmpty()) {
-            removeLoader()
-        } else {
-            items.removeAt(items.size - 1)
-            items.addAll(newItems)
-            adapter.notifyItemRangeChanged(items.size - newItems.size, newItems.size)
-        }
-    }
-
-    private fun removeLoader() {
-        items.removeAt(items.size - 1)
-        adapter.notifyItemRemoved(items.size + 1)
-    }
-}
-
-interface AdapterCallbacks {
-    fun notifyItemInserted(position: Int)
-    fun notifyItemRemoved(position: Int)
-    fun notifyItemRangeChanged(startPosition: Int, count: Int)
-    fun notifyDataSetChanged()
-}
-open class Adapter<T : ViewTyped>(override val items: MutableList<ViewTyped> = mutableListOf(),
+open class Adapter<T : ViewTyped>(val items: MutableList<ViewTyped> = mutableListOf(),
                                   private val emptyList: ViewTyped? = null,
                                   private val emptyError: ViewTyped? = null,
-                                  private val holderFactory: HolderFactory) : RecyclerView.Adapter<BaseViewHolder<ViewTyped>>(),
-        PageAdapter,
-        AdapterCallbacks {
+                                  private val holderFactory: HolderFactory) : RecyclerView.Adapter<BaseViewHolder<ViewTyped>>() {
 
-    override val adapter: AdapterCallbacks = this
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ViewTyped> = holderFactory.invoke(
             parent,
             viewType)
@@ -154,16 +115,15 @@ open class Adapter<T : ViewTyped>(override val items: MutableList<ViewTyped> = m
         }
     }
 
+    private fun addItems(newItems: List<T>) {
+        items.removeAt(items.size - 1)
+        items.addAll(newItems)
+        notifyItemRangeChanged(items.size - newItems.size, newItems.size)
+    }
+
     fun removeItem(position: Int): T {
         val item = items.removeAt(position) as T
         notifyItemRemoved(position)
         return item
-    }
-
-    fun reverseChangeStatus(toReverseChangeStatus: List<Pair<Int, T>>) {
-        toReverseChangeStatus.asReversed().forEach { (position, item) ->
-            items.add(position, item)
-            notifyItemInserted(position)
-        }
     }
 }

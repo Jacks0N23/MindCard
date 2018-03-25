@@ -12,6 +12,7 @@ class MainActivity : BaseMvpActivity(R.layout.activity_plans) {
         setSupportActionBar(toolbar)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, PlansFragment())
+                .addToBackStack(null)
                 .commit()
     }
 }

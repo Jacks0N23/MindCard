@@ -1,10 +1,11 @@
-package ru.andrroider.apps.mindcard.di;
+package ru.andrroider.apps.mindcard.plans.di;
 
 import dagger.Module;
 import dagger.Provides;
 import ru.andrroider.apps.business.plans.AddPlanInteractor;
 import ru.andrroider.apps.business.plans.GetPlansInteractor;
 import ru.andrroider.apps.data.db.PlansDao;
+import ru.andrroider.apps.mindcard.di.ApplicationContext;
 import ru.andrroider.apps.mindcard.plans.PlansPresenter;
 import ru.andrroider.apps.mindcard.plans.PlansToPlanUI;
 import ru.andrroider.apps.mindcard.plans.creation.NewPlanPresenter;
@@ -27,7 +28,6 @@ public class PlansModule {
     static AddPlanInteractor provideAddPlanInteractor(PlansDao plansDao) {
         return new AddPlanInteractor(plansDao);
     }
-
 
     @Provides
     @ApplicationContext

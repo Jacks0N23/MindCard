@@ -16,8 +16,12 @@ import ru.andrroider.apps.mindcard.extentions.setAfterTextChangedAction
  * Created by Jackson on 07/02/2018.
  */
 
-fun startNewPlanActivity(context: Context) {
-    context.startActivity(Intent(context, NewPlanActivity::class.java))
+const val PLAN_ID = "PLAN_ID"
+
+fun startNewPlanActivity(context: Context, planId: Long?) {
+    val intent = Intent(context, NewPlanActivity::class.java)
+    intent.putExtra(PLAN_ID, planId)
+    context.startActivity(intent)
 }
 
 class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan), NewPlanView {
@@ -61,8 +65,10 @@ class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan), NewPlanView
     private fun saveWithBlankCheck() {
         if (planTitle.text.isBlank())
             planTitleContainer.error = getString(R.string.title_error)
-        else
-            presenter.addNewItem(planTitle.text.toString(), planDescription.text.toString())
+        else {
+            val planId = intent.getLongExtra(PLAN_ID, -1)
+            presenter.addNewItem(planTitle.text.toString(), planDescription.text.toString(), planId)
+        }
     }
 
     override fun onBackPressed() {

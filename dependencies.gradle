@@ -1,6 +1,6 @@
 ext {
     //versions
-    kotlinVersion = '1.2.21'
+    kotlinVersion = '1.2.30'
     supportVersion = '27.0.0'
     retrofitVersion = '2.3.0'
     glideVersion = '4.4.0'
