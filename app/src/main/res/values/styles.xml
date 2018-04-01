@@ -20,4 +20,18 @@
     <style name="Error" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="WhiteHint" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+    </style>
+
+    <style name="WhiteUnderline" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+    </style>
 </resources>

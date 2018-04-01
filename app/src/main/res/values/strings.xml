@@ -6,6 +6,10 @@
     <string name="short_description">Описание</string>
     <string name="title_error">Пожалуйста придумайте название</string>
     <string name="save">Сохранить?</string>
+    <string name="deleteWithQuestion">Удалить?</string>
+    <string name="deleteMessage">Внимание! Все вложенные задачи удалятся тоже, Вы уверены ?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="edit">Изменить</string>
+    <string name="delete">Удалить</string>
 </resources>

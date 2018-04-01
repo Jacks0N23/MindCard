@@ -14,16 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="8dp"
+        android:layout_gravity="center"
+        android:paddingBottom="16dp"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:paddingTop="8dp">
+        android:paddingTop="16dp">
 
         <TextView
-            android:id="@+id/planTitle"
+            android:id="@+id/itemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:hint="@string/title"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textColor="@color/black"
@@ -32,7 +33,7 @@
             tools:text="@sample/plans.json/data/title"/>
 
         <TextView
-            android:id="@+id/planDescription"
+            android:id="@+id/itemDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

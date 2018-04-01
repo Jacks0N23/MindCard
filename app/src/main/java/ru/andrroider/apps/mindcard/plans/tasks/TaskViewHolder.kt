@@ -9,13 +9,16 @@ import ru.andrroider.apps.mindcard.extentions.hide
 import ru.andrroider.apps.mindcard.extentions.show
 import ru.andrroider.apps.mindcard.widget.recyclerView.BaseViewHolder
 
-class TaskViewHolder(view: View, onCardClickListener: (View) -> Unit) : BaseViewHolder<TaskUi>(view) {
+class TaskViewHolder(view: View,
+                     onCardClickListener: (View) -> Unit,
+                     onCardLongClickListener: (View) -> Boolean) : BaseViewHolder<TaskUi>(view) {
 
-    private val title: TextView = view.findView(R.id.planTitle)
-    private val description: TextView = view.findView(R.id.planDescription)
+    private val title: TextView = view.findView(R.id.itemTitle)
+    private val description: TextView = view.findView(R.id.itemDescription)
 
     init {
         itemView.setOnClickListener(onCardClickListener)
+        itemView.setOnLongClickListener(onCardLongClickListener)
     }
 
     override fun bind(item: TaskUi) {

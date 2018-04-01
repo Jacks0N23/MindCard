@@ -1,6 +1,7 @@
-package ru.andrroider.apps.business.plans
+package ru.andrroider.apps.business.plans.tasks
 
 import io.reactivex.Flowable
+import ru.andrroider.apps.business.plans.TaskUi
 import ru.andrroider.apps.data.db.Plans
 import ru.andrroider.apps.data.db.PlansDao
 
@@ -10,7 +11,9 @@ import ru.andrroider.apps.data.db.PlansDao
 class GetTasksByPlanIdInteractor(private val plansDao: PlansDao,
                                  private val tasksToTaskUi: (List<Plans>) -> List<TaskUi>) :
         (Long?) -> Flowable<List<TaskUi>> {
+
     override fun invoke(planId: Long?): Flowable<List<TaskUi>> {
-        return plansDao.getTasksByPlanId(planId).map(tasksToTaskUi)
+        return plansDao.getTasksByPlanId(planId)
+            .map(tasksToTaskUi)
     }
 }

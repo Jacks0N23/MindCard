@@ -1,4 +1,4 @@
-package ru.andrroider.apps.mindcard.plans.creation
+package ru.andrroider.apps.mindcard.plans.tasks
 
 import android.content.Context
 import android.content.Intent
@@ -6,26 +6,31 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import kotlinx.android.synthetic.main.activity_new_plan.*
+import kotlinx.android.synthetic.main.activity_new_task.*
 import ru.andrroider.apps.data.db.Plans
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.base.BaseMvpActivity
 import ru.andrroider.apps.mindcard.di.AppComponentInjector
 import ru.andrroider.apps.mindcard.extentions.setAfterTextChangedAction
+import ru.andrroider.apps.mindcard.plans.creation.NewPlanPresenter
+import ru.andrroider.apps.mindcard.plans.creation.NewPlanView
 
 /**
- * Created by Jackson on 07/02/2018.
+ * Created by Jackson on 27/03/2018.
  */
-const val PLAN_EDIT_ID = "PLAN_EDIT_ID"
+const val PLAN_ID = "PLAN_ID"
+const val EDIT_TASK_ID = "EDIT_TASK_ID"
 
-fun startNewPlanActivity(context: Context, planToEditId: Long? = null) {
-    val intent = Intent(context, NewPlanActivity::class.java)
-    intent.putExtra(PLAN_EDIT_ID, planToEditId)
+fun startNewTaskActivity(context: Context, planId: Long? = null, editItemId: Long? = null) {
+    val intent = Intent(context, NewTaskActivity::class.java)
+    intent.putExtra(PLAN_ID, planId)
+    intent.putExtra(EDIT_TASK_ID, editItemId)
     context.startActivity(intent)
 }
 
-class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
+class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
                         NewPlanView {
+
 
     @InjectPresenter
     lateinit var presenter: NewPlanPresenter
@@ -34,7 +39,7 @@ class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
     fun providePresenter(): NewPlanPresenter = AppComponentInjector.component().newPlanPresenter()
 
     private val quitDialog by lazy {
-        AlertDialog.Builder(this@NewPlanActivity)
+        AlertDialog.Builder(this)
             .setTitle(R.string.save)
             .setPositiveButton(R.string.yes, { _, _ ->
                 saveWithBlankCheck()
@@ -44,25 +49,27 @@ class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
             })
             .create()
     }
-    private val planEditId by lazy { intent.getLongExtra(PLAN_EDIT_ID, -1) }
+    private val planId by lazy { intent.getLongExtra(PLAN_ID, -1) }
+    private val taskId by lazy { intent.getLongExtra(EDIT_TASK_ID, -1) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-        if (planEditId > -1) {
-            presenter.loadTaskForEditing(planEditId)
+        if (taskId > -1) {
+            presenter.loadTaskForEditing(taskId)
         }
         saveTask.setOnClickListener { saveWithBlankCheck() }
-        itemTitle.setAfterTextChangedAction { text ->
+        taskTitle.setAfterTextChangedAction { text ->
             taskTitleContainer.error = if (text.isNullOrBlank()) getString(R.string.title_error) else ""
         }
     }
 
     override fun fillForEditing(plans: Plans) {
-        itemTitle.setText(plans.title)
-        itemDescription.setText(plans.description)
+        taskTitle.setText(plans.title)
+        taskTitle.setSelection(taskTitle.length())
+        taskDescription.setText(plans.description)
     }
 
     override fun finishAfterCreation() {
@@ -75,11 +82,12 @@ class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
 
     private fun saveWithBlankCheck() {
         when {
-            planEditId > -1 -> presenter.updateItem(itemTitle.text.toString(), itemDescription.text.toString(),
-                    planEditId)
-            itemTitle.text.isBlank() -> taskTitleContainer.error = getString(R.string.title_error)
+            taskTitle.text.isBlank() -> taskTitleContainer.error = getString(R.string.title_error)
+            taskId > -1 -> presenter.updateItem(taskTitle.text.toString(), taskDescription.text.toString(),
+                    taskId, planId)
             else -> {
-                presenter.addNewItem(itemTitle.text.toString(), itemDescription.text.toString())
+                val planId = intent.getLongExtra(PLAN_ID, -1)
+                presenter.addNewItem(taskTitle.text.toString(), taskDescription.text.toString(), planId)
             }
         }
     }

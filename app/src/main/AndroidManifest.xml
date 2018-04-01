@@ -25,6 +25,7 @@
             android:name=".plans.creation.NewPlanActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".plans.tasks.NewTaskActivity" />
     </application>
 
 </manifest>

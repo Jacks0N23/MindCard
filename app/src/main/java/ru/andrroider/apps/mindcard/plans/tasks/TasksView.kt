@@ -6,4 +6,5 @@ import ru.andrroider.apps.business.plans.TaskUi
 interface TasksView : MvpView {
     fun showTasks(tasks: List<TaskUi>)
     fun showError(throwable: Throwable)
+    fun taskSuccessfullyDeleted(indexOfDeletedItem: Int)
 }

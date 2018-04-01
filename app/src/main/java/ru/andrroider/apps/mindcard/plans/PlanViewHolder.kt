@@ -11,13 +11,16 @@ import ru.andrroider.apps.mindcard.widget.recyclerView.BaseViewHolder
 /**
  * Created by Jackson on 03/02/2018.
  */
-class PlanViewHolder(view: View, onCardClickListener: (View) -> Unit) : BaseViewHolder<PlanUi>(view) {
+class PlanViewHolder(view: View,
+                     onCardClickListener: (View) -> Unit,
+                     onCardLongClickListener: (View) -> Boolean) : BaseViewHolder<PlanUi>(view) {
 
-    private val title: TextView = view.planTitle
-    private val description: TextView = view.planDescription
+    private val title: TextView = view.itemTitle
+    private val description: TextView = view.itemDescription
 
     init {
         itemView.setOnClickListener(onCardClickListener)
+        itemView.setOnLongClickListener(onCardLongClickListener)
     }
 
     override fun bind(item: PlanUi) {

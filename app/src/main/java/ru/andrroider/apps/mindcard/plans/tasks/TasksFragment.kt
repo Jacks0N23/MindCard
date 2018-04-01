@@ -1,20 +1,14 @@
 package ru.andrroider.apps.mindcard.plans.tasks
 
 import android.os.Bundle
-import android.widget.TextView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_tasks.*
 import ru.andrroider.apps.business.plans.TaskUi
-import ru.andrroider.apps.data.ViewTyped
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.base.BaseMVPFragment
 import ru.andrroider.apps.mindcard.di.AppComponentInjector
-import ru.andrroider.apps.mindcard.extentions.asType
-import ru.andrroider.apps.mindcard.extentions.findView
-import ru.andrroider.apps.mindcard.plans.creation.PLAN_ID
-import ru.andrroider.apps.mindcard.plans.creation.startNewPlanActivity
-import ru.andrroider.apps.mindcard.widget.recyclerView.Adapter
+import ru.andrroider.apps.mindcard.plans.tasks.di.TaskComponent
 
 /**
  * Created by Jackson on 25/03/2018.
@@ -30,18 +24,19 @@ fun newTasksInstance(planId: Long, title: CharSequence): TasksFragment {
     }
 }
 
-class TasksFragment : BaseMVPFragment(), TasksView {
+class TasksFragment : BaseMVPFragment(),
+                      TasksView {
 
     override val layoutId: Int = R.layout.fragment_tasks
-    private val tasksItems = mutableListOf<ViewTyped>()
-    private val adapter = Adapter<TaskUi>(tasksItems, holderFactory = TasksHolderFactory({
-        fragmentManager?.beginTransaction()
-                ?.replace(R.id.fragmentContainer,
-                        newTasksInstance(it.tag.asType(), it.findView<TextView>(R.id.planTitle).text))
-                ?.addToBackStack(null)
-                ?.commit()
-    }))
-
+    private val component by lazy {
+        TaskComponent(activity = activity, fragmentManager = fragmentManager, deleteCardAction = {
+            presenter.deleteTask(it)
+        }, editCardAction = {
+            activity?.let { activity -> startNewTaskActivity(activity, planId, it) }
+        })
+    }
+    private val adapter by lazy { component.adapter }
+    private val planId by lazy { arguments?.getLong(PLAN_ID) }
     @InjectPresenter
     lateinit var presenter: TasksPresenter
 
@@ -50,12 +45,13 @@ class TasksFragment : BaseMVPFragment(), TasksView {
 
     override fun onStart() {
         super.onStart()
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         activity?.title = arguments?.getString(PLAN_TITLE)
 
         tasksList.adapter = adapter
-        val planId = arguments?.getLong(PLAN_ID)
+
         presenter.loadAllTasksByPlanId(planId)
-        fab.setOnClickListener { activity?.let { startNewPlanActivity(it, planId) } }
+        fab.setOnClickListener { activity?.let { startNewTaskActivity(it, planId) } }
     }
 
     override fun showTasks(tasks: List<TaskUi>) {
@@ -64,5 +60,9 @@ class TasksFragment : BaseMVPFragment(), TasksView {
 
     override fun showError(throwable: Throwable) {
         showErrorWithSnackbar(throwable)
+    }
+
+    override fun taskSuccessfullyDeleted(indexOfDeletedItem: Int) {
+        adapter.removeItem(indexOfDeletedItem)
     }
 }

@@ -2,7 +2,8 @@ package ru.andrroider.apps.mindcard.plans.tasks.di;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.andrroider.apps.business.plans.GetTasksByPlanIdInteractor;
+import ru.andrroider.apps.business.plans.tasks.DeleteInteractor;
+import ru.andrroider.apps.business.plans.tasks.GetTasksByPlanIdInteractor;
 import ru.andrroider.apps.data.db.PlansDao;
 import ru.andrroider.apps.mindcard.di.ApplicationContext;
 import ru.andrroider.apps.mindcard.plans.tasks.TasksPresenter;
@@ -20,9 +21,11 @@ public class TasksModule {
     static GetTasksByPlanIdInteractor provideGetTasksByPlanIdInteractor(PlansDao plansDao) {
         return new GetTasksByPlanIdInteractor(plansDao, plans -> new TasksToTaskUI().invoke(plans));
     }
+
     @Provides
     @ApplicationContext
-    static TasksPresenter providePlansPresenter(GetTasksByPlanIdInteractor getTasksByPlanIdInteractor) {
-        return new TasksPresenter(getTasksByPlanIdInteractor);
+    static TasksPresenter providePlansPresenter(GetTasksByPlanIdInteractor getTasksByPlanIdInteractor,
+                                                DeleteInteractor deleteInteractor) {
+        return new TasksPresenter(getTasksByPlanIdInteractor, deleteInteractor);
     }
 }

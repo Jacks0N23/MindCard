@@ -15,7 +15,6 @@
             android:id="@+id/appbarPlanEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/new_plan_background"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.v7.widget.Toolbar
@@ -24,22 +23,24 @@
                 android:layout_height="?actionBarSize" />
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/planTitleContainer"
+                android:id="@+id/taskTitleContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:layout_marginBottom="16dp"
                 android:textColorHint="@color/white"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/WhiteHint">
 
-                <EditText
-                    android:id="@+id/planTitle"
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/itemTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/title"
                     android:inputType="textCapSentences|textMultiLine"
                     android:textSize="22sp"
+                    android:theme="@style/WhiteUnderline"
                     tools:text="очень длинное тестовое название" />
             </android.support.design.widget.TextInputLayout>
         </android.support.design.widget.AppBarLayout>
@@ -60,22 +61,40 @@
                 android:adjustViewBounds="false"
                 android:src="@drawable/ic_description" />
 
-            <EditText
-                android:id="@+id/planDescription"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/descriptionContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/short_description"
-                android:inputType="textCapSentences|textMultiLine"
-                android:textSize="16sp" />
+                android:layout_marginBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/saveTask">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/itemDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:ems="10"
+                    android:hint="@string/short_description"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:textSize="16sp"
+                    tools:text="description" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/savePlan"
+        android:id="@+id/saveTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/ic_send"
+        app:fabSize="normal"
         app:layout_anchor="@id/appbarPlanEdit"
         app:layout_anchorGravity="bottom|right|end" />
 </android.support.design.widget.CoordinatorLayout>
