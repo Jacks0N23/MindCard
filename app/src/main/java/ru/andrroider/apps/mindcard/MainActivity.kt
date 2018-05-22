@@ -10,7 +10,6 @@ class MainActivity : BaseMvpActivity(R.layout.activity_plans) {
         super.onCreate(savedInstanceState)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, PlansFragment())
-                .addToBackStack(null)
                 .commit()
     }
 }

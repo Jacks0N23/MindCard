@@ -77,7 +77,7 @@ class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
         when {
             planEditId > -1 -> presenter.updateItem(itemTitle.text.toString(), itemDescription.text.toString(),
                     planEditId)
-            itemTitle.text.isBlank() -> taskTitleContainer.error = getString(R.string.title_error)
+            itemTitle.text.isNullOrBlank() -> taskTitleContainer.error = getString(R.string.title_error)
             else -> {
                 presenter.addNewItem(itemTitle.text.toString(), itemDescription.text.toString())
             }

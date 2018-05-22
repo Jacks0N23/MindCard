@@ -46,7 +46,7 @@ class TasksFragment : BaseMVPFragment(),
     override fun onStart() {
         super.onStart()
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
-        activity?.title = arguments?.getString(PLAN_TITLE)
+        toolbar.title = arguments?.getString(PLAN_TITLE)
 
         tasksList.adapter = adapter
 

@@ -3,10 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 'android-P'
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -21,23 +21,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation compileDependencies.appcompatV7
     implementation compileDependencies.kotlin
     implementation compileDependencies.rxJava2
     implementation compileDependencies.rxKotlin2
-
     implementation compileDependencies.room
     implementation compileDependencies.roomRx
-
     annotationProcessor aptDependencies.room
     kapt aptDependencies.room
-
     testImplementation 'junit:junit:4.12'
-
 }
 repositories {
     mavenCentral()

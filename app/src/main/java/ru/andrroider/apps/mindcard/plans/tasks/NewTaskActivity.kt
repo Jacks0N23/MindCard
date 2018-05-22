@@ -82,7 +82,7 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
 
     private fun saveWithBlankCheck() {
         when {
-            taskTitle.text.isBlank() -> taskTitleContainer.error = getString(R.string.title_error)
+            taskTitle.text.isNullOrBlank() -> taskTitleContainer.error = getString(R.string.title_error)
             taskId > -1 -> presenter.updateItem(taskTitle.text.toString(), taskDescription.text.toString(),
                     taskId, planId)
             else -> {
