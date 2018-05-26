@@ -1,6 +1,7 @@
 package ru.andrroider.apps.data.db
 
 import android.arch.persistence.room.*
+import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import io.reactivex.Flowable
 import org.intellij.lang.annotations.Language
 
@@ -9,11 +10,11 @@ import org.intellij.lang.annotations.Language
  */
 @Entity(tableName = "plans")
 data class Plans(
-    val title: String,
-    val description: String,
-    val planId: Long? = null,
-    @ColumnInfo(name = "id")
-    @PrimaryKey(autoGenerate = true) var id: Long = 0L
+        val title: String,
+        val description: String,
+        val planId: Long? = null,
+        @ColumnInfo(name = "id")
+        @PrimaryKey(autoGenerate = true) var id: Long = 0L
 )
 
 @Dao
@@ -30,7 +31,7 @@ interface PlansDao {
     @Insert
     fun insert(plan: Plans)
 
-    @Update
+    @Update(onConflict = REPLACE)
     fun update(plan: Plans)
 
     @Language("RoomSql")

@@ -21,14 +21,13 @@ class EmptyView(override val viewType: Int) : ViewTyped
 
 class EmptyViewHolder(itemView: View) : BaseViewHolder<EmptyView>(itemView)
 
-open class Adapter<T : ViewTyped>(val items: MutableList<ViewTyped> = mutableListOf(),
+open class Adapter<T : ViewTyped>(private val items: MutableList<ViewTyped> = mutableListOf(),
                                   private val emptyList: ViewTyped? = null,
                                   private val emptyError: ViewTyped? = null,
                                   private val holderFactory: HolderFactory) : RecyclerView.Adapter<BaseViewHolder<ViewTyped>>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ViewTyped> = holderFactory.invoke(
-            parent,
-            viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<ViewTyped> =
+            holderFactory.invoke(parent, viewType)
 
     override fun getItemCount(): Int = items.size
     override fun onBindViewHolder(holder: BaseViewHolder<ViewTyped>, position: Int) = holder.bind(items[position])

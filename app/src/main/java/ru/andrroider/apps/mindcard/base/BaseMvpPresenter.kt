@@ -9,16 +9,19 @@ import io.reactivex.disposables.Disposable
  * Created by Jackson on 08/02/2018.
  */
 
-open class BaseMvpPresenter<VIEW: MvpView> : MvpPresenter<VIEW>() {
+open class BaseMvpPresenter<VIEW : MvpView> : MvpPresenter<VIEW>() {
     var compositeDisposable = CompositeDisposable()
 
     fun addSubscription(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }
+
     override fun onDestroy() {
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.dispose()
-        }
+        disposeSubscriptions()
         super.onDestroy()
+    }
+
+    fun disposeSubscriptions() {
+        compositeDisposable.clear()
     }
 }

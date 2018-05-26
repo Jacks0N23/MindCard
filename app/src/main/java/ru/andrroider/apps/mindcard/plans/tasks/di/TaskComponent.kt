@@ -1,7 +1,6 @@
 package ru.andrroider.apps.mindcard.plans.tasks.di
 
 import android.app.Activity
-import android.support.v4.app.FragmentManager
 import android.support.v7.widget.PopupMenu
 import android.view.Gravity
 import android.view.View
@@ -13,22 +12,20 @@ import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.extentions.asType
 import ru.andrroider.apps.mindcard.extentions.findView
 import ru.andrroider.apps.mindcard.plans.tasks.TasksHolderFactory
-import ru.andrroider.apps.mindcard.plans.tasks.newTasksInstance
+import ru.andrroider.apps.mindcard.plans.tasks.TasksPresenter
 import ru.andrroider.apps.mindcard.widget.createDeleteConfirmationDialog
 import ru.andrroider.apps.mindcard.widget.recyclerView.Adapter
 
 class TaskComponent(private val activity: Activity?,
-                    private val fragmentManager: FragmentManager?,
+                    private val tasksPresenter: TasksPresenter,
                     private val deleteCardAction: ParametrizedAction<Long>,
                     private val editCardAction: ParametrizedAction<Long>) {
 
     private val tasksItems = mutableListOf<ViewTyped>()
     private val onCardClickListener: (View) -> Unit = {
-        fragmentManager?.beginTransaction()
-            ?.replace(R.id.fragmentContainer,
-                    newTasksInstance(it.tag.asType(), it.findView<TextView>(R.id.itemTitle).text))
-            ?.addToBackStack(null)
-            ?.commit()
+        tasksPresenter.addPlanToNodeAndLoadData(
+                it.findView<TextView>(R.id.itemTitle).text.asType(),
+                it.tag.asType())
     }
     private val onCardLongClickListener: (View) -> Boolean = { view ->
         popupMenu(view)?.show()
@@ -43,7 +40,7 @@ class TaskComponent(private val activity: Activity?,
     }
     private val deleteConfirmationDialog = { cardId: Long ->
         activity?.createDeleteConfirmationDialog({ deleteCardAction(cardId) })
-            ?.show()
+                ?.show()
     }
     private val popupMenu = { view: View ->
         activity?.let { activity ->

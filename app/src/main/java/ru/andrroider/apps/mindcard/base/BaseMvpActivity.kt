@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.fragment_plans.*
  */
 abstract class BaseMvpActivity(private val layoutId: Int) : MvpAppCompatActivity() {
 
+    lateinit var onActivityBackPressed: OnActivityBackPressed
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
@@ -20,5 +21,11 @@ abstract class BaseMvpActivity(private val layoutId: Int) : MvpAppCompatActivity
     fun showErrorWithSnackbar(throwable: Throwable) {
         Snackbar.make(container, "Возникла ошибка", Snackbar.LENGTH_INDEFINITE)
         throwable.printStackTrace()
+    }
+
+    override fun onBackPressed() {
+        if (onActivityBackPressed.onBackPressed()) {
+            super.onBackPressed()
+        }
     }
 }

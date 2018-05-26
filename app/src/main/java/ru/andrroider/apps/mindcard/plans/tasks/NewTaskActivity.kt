@@ -29,8 +29,7 @@ fun startNewTaskActivity(context: Context, planId: Long? = null, editItemId: Lon
 }
 
 class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
-                        NewPlanView {
-
+        NewPlanView {
 
     @InjectPresenter
     lateinit var presenter: NewPlanPresenter
@@ -40,14 +39,14 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
 
     private val quitDialog by lazy {
         AlertDialog.Builder(this)
-            .setTitle(R.string.save)
-            .setPositiveButton(R.string.yes, { _, _ ->
-                saveWithBlankCheck()
-            })
-            .setNegativeButton(R.string.no, { _, _ ->
-                finish()
-            })
-            .create()
+                .setTitle(R.string.save)
+                .setPositiveButton(R.string.yes, { _, _ ->
+                    saveWithBlankCheck()
+                })
+                .setNegativeButton(R.string.no, { _, _ ->
+                    finish()
+                })
+                .create()
     }
     private val planId by lazy { intent.getLongExtra(PLAN_ID, -1) }
     private val taskId by lazy { intent.getLongExtra(EDIT_TASK_ID, -1) }
@@ -93,6 +92,7 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         quitDialog.show()
     }
 }
