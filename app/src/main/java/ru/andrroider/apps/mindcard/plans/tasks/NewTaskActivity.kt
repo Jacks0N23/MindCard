@@ -73,6 +73,37 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
         taskColorContainer.setOnClickListener { showColorPicker() }
     }
 
+    private fun saveWithBlankCheck() {
+        when {
+            taskTitle.text.isNullOrBlank() -> taskTitleContainer.error = getString(R.string.title_error)
+            taskId > -1 -> presenter.updateItem(
+                    taskTitle.text.toString(),
+                    taskDescription.text.toString(),
+                    taskId,
+                    taskColor.backgroundTintList?.defaultColor,
+                    planId)
+            else -> {
+                val planId = intent.getLongExtra(PLAN_ID, -1)
+                presenter.addNewItem(
+                        taskTitle.text.toString(),
+                        taskDescription.text.toString(),
+                        taskColor.backgroundTintList?.defaultColor,
+                        planId)
+            }
+        }
+    }
+
+    private fun showColorPicker() {
+        ColorPickerDialog.newBuilder()
+                .setDialogTitle(R.string.pick_color)
+                .setDialogType(ColorPickerDialog.TYPE_PRESETS)
+                .setPresets(resources.getIntArray(R.array.task_colors))
+                .setAllowCustom(false)
+                .setDialogId(0)
+                .setSelectedButtonText(R.string.pick_color_select)
+                .show(this)
+    }
+
     override fun fillForEditing(plans: Plans) {
         taskTitle.setText(plans.title)
         taskTitle.setSelection(taskTitle.length())
@@ -97,29 +128,5 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
 
     override fun onColorSelected(dialogId: Int, color: Int) {
         taskColor.backgroundTintList = ColorStateList.valueOf(color)
-    }
-
-
-    private fun saveWithBlankCheck() {
-        when {
-            taskTitle.text.isNullOrBlank() -> taskTitleContainer.error = getString(R.string.title_error)
-            taskId > -1 -> presenter.updateItem(taskTitle.text.toString(), taskDescription.text.toString(),
-                    taskId, planId)
-            else -> {
-                val planId = intent.getLongExtra(PLAN_ID, -1)
-                presenter.addNewItem(taskTitle.text.toString(), taskDescription.text.toString(), planId)
-            }
-        }
-    }
-
-    private fun showColorPicker() {
-        ColorPickerDialog.newBuilder()
-                .setDialogTitle(R.string.pick_color)
-                .setDialogType(ColorPickerDialog.TYPE_PRESETS)
-                .setPresets(resources.getIntArray(R.array.task_colors))
-                .setAllowCustom(false)
-                .setDialogId(0)
-                .setSelectedButtonText(R.string.pick_color_select)
-                .show(this)
     }
 }

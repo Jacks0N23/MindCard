@@ -1,5 +1,6 @@
 package ru.andrroider.apps.mindcard.plans.creation
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -17,7 +18,7 @@ class NewPlanPresenter(private val addPlanInteractor: AddPlanInteractor,
                        private val getPlansByIdInteractor: GetPlansByIdInteractor,
                        private val updateInteractor: UpdateInteractor) : BaseMvpPresenter<NewPlanView>() {
 
-    fun addNewItem(title: String, description: String, planId: Long? = null) {
+    fun addNewItem(title: String, description: String, color: Int? = null, planId: Long? = null) {
         val plan = Plans(title, description, planId)
         addSubscription(addPlanInteractor(plan).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe({ viewState.finishAfterCreation() }, viewState::showError))
@@ -28,7 +29,7 @@ class NewPlanPresenter(private val addPlanInteractor: AddPlanInteractor,
                 AndroidSchedulers.mainThread()).subscribe(viewState::fillForEditing, viewState::showError))
     }
 
-    fun updateItem(title: String, description: String, id: Long, planId: Long? = null) {
+    fun updateItem(title: String, description: String, id: Long, color: Int? = null, planId: Long? = null) {
         val plan = Plans(title, description, id = id, planId = planId)
         addSubscription(updateInteractor(plan)
             .subscribeOn(Schedulers.io())
