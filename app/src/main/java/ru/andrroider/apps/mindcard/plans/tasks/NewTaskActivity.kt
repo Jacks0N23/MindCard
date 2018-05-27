@@ -2,10 +2,13 @@ package ru.andrroider.apps.mindcard.plans.tasks
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.jaredrummler.android.colorpicker.ColorPickerDialog
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import kotlinx.android.synthetic.main.activity_new_task.*
 import ru.andrroider.apps.data.db.Plans
 import ru.andrroider.apps.mindcard.R
@@ -29,7 +32,7 @@ fun startNewTaskActivity(context: Context, planId: Long? = null, editItemId: Lon
 }
 
 class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
-        NewPlanView {
+        NewPlanView, ColorPickerDialogListener {
 
     @InjectPresenter
     lateinit var presenter: NewPlanPresenter
@@ -66,6 +69,8 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
         taskTitle.setAfterTextChangedAction { text ->
             taskTitleContainer.error = if (text.isNullOrBlank()) getString(R.string.title_error) else ""
         }
+
+        taskColorContainer.setOnClickListener { showColorPicker() }
     }
 
     override fun fillForEditing(plans: Plans) {
@@ -82,6 +87,19 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
         showErrorWithSnackbar(throwable)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        quitDialog.show()
+    }
+
+    override fun onDialogDismissed(dialogId: Int) {
+    }
+
+    override fun onColorSelected(dialogId: Int, color: Int) {
+        taskColor.backgroundTintList = ColorStateList.valueOf(color)
+    }
+
+
     private fun saveWithBlankCheck() {
         when {
             taskTitle.text.isNullOrBlank() -> taskTitleContainer.error = getString(R.string.title_error)
@@ -94,8 +112,14 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        quitDialog.show()
+    private fun showColorPicker() {
+        ColorPickerDialog.newBuilder()
+                .setDialogTitle(R.string.pick_color)
+                .setDialogType(ColorPickerDialog.TYPE_PRESETS)
+                .setPresets(resources.getIntArray(R.array.task_colors))
+                .setAllowCustom(false)
+                .setDialogId(0)
+                .setSelectedButtonText(R.string.pick_color_select)
+                .show(this)
     }
 }
