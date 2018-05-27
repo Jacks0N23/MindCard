@@ -7,6 +7,7 @@ ext {
     moxyVersion = '1.5.3'
     roomVersion = '1.0.0'
     daggerVersion = '2.15'
+    colorPickerVersion = '1.0.2'
 
     androidPlugin = 'com.android.tools.build:gradle:3.2.0-alpha15'
     kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -29,7 +30,8 @@ ext {
             moxy                  : "com.arello-mobile:moxy-android:$moxyVersion",
             moxyAndroid           : "com.arello-mobile:moxy-android:$moxyVersion",
             moxyAppCompat         : "com.arello-mobile:moxy-app-compat:$moxyVersion",
-            dagger                : "com.google.dagger:dagger:$daggerVersion"
+            dagger                : "com.google.dagger:dagger:$daggerVersion",
+            colorPicker           : "com.jaredrummler:colorpicker:$colorPickerVersion"
     ]
 
     aptDependencies = [

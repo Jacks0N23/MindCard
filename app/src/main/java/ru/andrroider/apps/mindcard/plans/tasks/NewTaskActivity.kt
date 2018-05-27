@@ -56,10 +56,13 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_new_task),
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressed() }
+
         if (taskId > -1) {
             presenter.loadTaskForEditing(taskId)
         }
+
         saveTask.setOnClickListener { saveWithBlankCheck() }
+
         taskTitle.setAfterTextChangedAction { text ->
             taskTitleContainer.error = if (text.isNullOrBlank()) getString(R.string.title_error) else ""
         }

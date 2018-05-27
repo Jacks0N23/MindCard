@@ -80,14 +80,30 @@
             tools:text="description" />
     </android.support.design.widget.TextInputLayout>
 
-    <!--<Switch-->
-    <!--android:id="@+id/switch1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="16dp"-->
-    <!--android:text="Switch"-->
-    <!--app:layout_constraintTop_toBottomOf="@+id/descriptionContainer"-->
-    <!--tools:layout_editor_absoluteX="259dp" />-->
+    <RelativeLayout
+        android:id="@+id/taskColorContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@id/descriptionContainer">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Выбери цвет"/>
+
+        <View
+            android:id="@+id/taskPickedColor"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
 
 
 </android.support.constraint.ConstraintLayout>
