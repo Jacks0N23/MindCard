@@ -1,5 +1,7 @@
 package ru.andrroider.apps.mindcard.plans.tasks
 
+import android.content.res.ColorStateList
+import android.support.design.widget.FloatingActionButton
 import android.view.View
 import android.widget.TextView
 import ru.andrroider.apps.business.plans.TaskUi
@@ -15,6 +17,7 @@ class TaskViewHolder(view: View,
 
     private val title: TextView = view.findView(R.id.itemTitle)
     private val description: TextView = view.findView(R.id.itemDescription)
+    private val taskColor: FloatingActionButton = view.findView(R.id.taskColor)
 
     init {
         itemView.setOnClickListener(onCardClickListener)
@@ -23,6 +26,7 @@ class TaskViewHolder(view: View,
 
     override fun bind(item: TaskUi) {
         title.text = item.title
+        taskColor.backgroundTintList = ColorStateList.valueOf(item.color)
         itemView.tag = item.id
         if (item.description.isNotBlank()) {
             description.show()

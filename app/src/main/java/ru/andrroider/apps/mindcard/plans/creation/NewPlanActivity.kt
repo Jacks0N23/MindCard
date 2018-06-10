@@ -25,24 +25,24 @@ fun startNewPlanActivity(context: Context, planToEditId: Long? = null) {
 }
 
 class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
-                        NewPlanView {
+        NewPlanView {
 
     @InjectPresenter
-    lateinit var presenter: NewPlanPresenter
+    lateinit var presenter: EditPlanPresenter
 
     @ProvidePresenter
-    fun providePresenter(): NewPlanPresenter = AppComponentInjector.component().newPlanPresenter()
+    fun providePresenter(): EditPlanPresenter = AppComponentInjector.component().newPlanPresenter()
 
     private val quitDialog by lazy {
         AlertDialog.Builder(this@NewPlanActivity)
-            .setTitle(R.string.save)
-            .setPositiveButton(R.string.yes, { _, _ ->
-                saveWithBlankCheck()
-            })
-            .setNegativeButton(R.string.no, { _, _ ->
-                finish()
-            })
-            .create()
+                .setTitle(R.string.save)
+                .setPositiveButton(R.string.yes, { _, _ ->
+                    saveWithBlankCheck()
+                })
+                .setNegativeButton(R.string.no, { _, _ ->
+                    finish()
+                })
+                .create()
     }
     private val planEditId by lazy { intent.getLongExtra(PLAN_EDIT_ID, -1) }
 

@@ -13,6 +13,7 @@ data class Plans(
         val title: String,
         val description: String,
         val planId: Long? = null,
+        val colorInt: Int = 0,
         val fromTimestamp: Long,
         val toTimestamp: Long,
         @ColumnInfo(name = "id")
@@ -44,7 +45,7 @@ interface PlansDao {
     fun deleteById(deleteItemId: Long): Int
 }
 
-@Database(entities = [(Plans::class)], version = 1)
+@Database(entities = [(Plans::class)], version = 2)
 abstract class PlansDatabase : RoomDatabase() {
 
     abstract fun plansDao(): PlansDao

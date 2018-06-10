@@ -3,6 +3,8 @@ package ru.andrroider.apps.mindcard.di;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import ru.andrroider.apps.data.db.PlansDao;
@@ -16,13 +18,14 @@ import ru.andrroider.apps.data.db.PlansDatabase;
 public class DatabaseModule {
 
     @Provides
-    @ApplicationContext
+    @Singleton
     static PlansDatabase providePlansDatabase(Context context) {
-        return Room.databaseBuilder(context, PlansDatabase.class, "plans-db").build();
+        return Room.databaseBuilder(context, PlansDatabase.class, "plans-db")
+                .fallbackToDestructiveMigration().build();
     }
 
     @Provides
-    @ApplicationContext
+    @Singleton
     static PlansDao providePlansDao(PlansDatabase db) {
         return db.plansDao();
     }

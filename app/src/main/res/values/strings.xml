@@ -12,4 +12,6 @@
     <string name="no">Нет</string>
     <string name="edit">Изменить</string>
     <string name="delete">Удалить</string>
+    <string name="pick_color">Выберите цвет</string>
+    <string name="pick_color_select">Выбрать</string>
 </resources>
