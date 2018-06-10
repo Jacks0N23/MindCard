@@ -14,6 +14,8 @@ data class Plans(
         val description: String,
         val planId: Long? = null,
         val colorInt: Int = 0,
+        val fromTimestamp: Long,
+        val toTimestamp: Long,
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true) var id: Long = 0L
 )
