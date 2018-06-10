@@ -20,8 +20,8 @@
             android:id="@+id/taskTitleContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             app:errorEnabled="true"
@@ -59,6 +59,7 @@
         android:id="@+id/descriptionContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -70,9 +71,6 @@
             android:id="@+id/taskDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
             android:ems="10"
             android:hint="@string/description"
             android:inputType="textCapSentences|textMultiLine"
@@ -94,7 +92,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pick_color"/>
+            android:text="@string/pick_color"
+            tools:ignore="RelativeOverlap" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/taskColor"

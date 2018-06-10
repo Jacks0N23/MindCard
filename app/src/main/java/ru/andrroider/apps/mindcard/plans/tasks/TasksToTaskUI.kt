@@ -6,6 +6,6 @@ import ru.andrroider.apps.mindcard.R
 
 class TasksToTaskUI : (List<Plans>) -> List<TaskUi> {
     override fun invoke(plans: List<Plans>): List<TaskUi> {
-        return plans.map { TaskUi(it.id, it.title, it.description, R.layout.item_task) }
+        return plans.map { TaskUi(it.id, it.title, it.colorInt, it.description, R.layout.item_task) }
     }
 }

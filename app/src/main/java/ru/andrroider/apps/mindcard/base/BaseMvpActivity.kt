@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_plans.*
  */
 abstract class BaseMvpActivity(private val layoutId: Int) : MvpAppCompatActivity() {
 
-    lateinit var onActivityBackPressed: OnActivityBackPressed
+    var onActivityBackPressed: OnActivityBackPressed? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
@@ -24,8 +24,8 @@ abstract class BaseMvpActivity(private val layoutId: Int) : MvpAppCompatActivity
     }
 
     override fun onBackPressed() {
-        if (onActivityBackPressed.onBackPressed()) {
-            super.onBackPressed()
+        onActivityBackPressed?.onBackPressed()?.run {
+            if (this) super.onBackPressed()
         }
     }
 }

@@ -9,7 +9,7 @@ ext {
     daggerVersion = '2.15'
     colorPickerVersion = '1.0.2'
 
-    androidPlugin = 'com.android.tools.build:gradle:3.2.0-alpha15'
+    androidPlugin = 'com.android.tools.build:gradle:3.2.0-alpha17'
     kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
     compileDependencies = [

@@ -13,6 +13,7 @@ data class Plans(
         val title: String,
         val description: String,
         val planId: Long? = null,
+        val colorInt: Int = 0,
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true) var id: Long = 0L
 )
@@ -42,7 +43,7 @@ interface PlansDao {
     fun deleteById(deleteItemId: Long): Int
 }
 
-@Database(entities = [(Plans::class)], version = 1)
+@Database(entities = [(Plans::class)], version = 2)
 abstract class PlansDatabase : RoomDatabase() {
 
     abstract fun plansDao(): PlansDao

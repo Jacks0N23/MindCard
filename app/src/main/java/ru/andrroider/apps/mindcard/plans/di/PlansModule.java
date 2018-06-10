@@ -11,7 +11,7 @@ import ru.andrroider.apps.data.db.PlansDao;
 import ru.andrroider.apps.mindcard.di.ApplicationContext;
 import ru.andrroider.apps.mindcard.plans.PlansPresenter;
 import ru.andrroider.apps.mindcard.plans.PlansToPlanUI;
-import ru.andrroider.apps.mindcard.plans.creation.NewPlanPresenter;
+import ru.andrroider.apps.mindcard.plans.creation.EditPlanPresenter;
 
 /**
  * Created by Jackson on 05/02/2018.
@@ -40,7 +40,7 @@ public class PlansModule {
 
     @Provides
     @ApplicationContext
-    static UpdateInteractor provideUpdateIntector(PlansDao plansDao) {
+    static UpdateInteractor provideUpdateInteractor(PlansDao plansDao) {
         return new UpdateInteractor(plansDao);
     }
 
@@ -58,9 +58,9 @@ public class PlansModule {
     }
 
     @Provides
-    NewPlanPresenter provideNewPlanPresenter(AddPlanInteractor addPlanInteractor,
-                                             GetPlansByIdInteractor getPlansByIdInteractor,
-                                             UpdateInteractor updateInteractor) {
-        return new NewPlanPresenter(addPlanInteractor, getPlansByIdInteractor, updateInteractor);
+    EditPlanPresenter provideNewPlanPresenter(AddPlanInteractor addPlanInteractor,
+                                              GetPlansByIdInteractor getPlansByIdInteractor,
+                                              UpdateInteractor updateInteractor) {
+        return new EditPlanPresenter(addPlanInteractor, getPlansByIdInteractor, updateInteractor);
     }
 }
