@@ -13,6 +13,8 @@ data class Plans(
         val title: String,
         val description: String,
         val planId: Long? = null,
+        val fromTimestamp: Long,
+        val toTimestamp: Long,
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true) var id: Long = 0L
 )
