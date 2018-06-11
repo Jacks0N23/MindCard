@@ -1,5 +1,7 @@
 package ru.andrroider.apps.mindcard.plans
 
+import android.os.Bundle
+import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_plans.*
@@ -11,7 +13,7 @@ import ru.andrroider.apps.mindcard.plans.creation.startNewPlanActivity
 import ru.andrroider.apps.mindcard.plans.di.PlansComponent
 
 class PlansFragment : BaseMVPFragment(),
-                      PlansView {
+        PlansView {
 
     override val layoutId: Int = R.layout.fragment_plans
     private val component by lazy {
@@ -31,8 +33,7 @@ class PlansFragment : BaseMVPFragment(),
     @ProvidePresenter
     fun providePresenter(): PlansPresenter = AppComponentInjector.component().planPresenter()
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         plansList.adapter = adapter
         presenter.loadAllPlans()
         fab.setOnClickListener { activity?.let { startNewPlanActivity(it) } }

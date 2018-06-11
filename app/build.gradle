@@ -42,6 +42,7 @@ dependencies {
     implementation compileDependencies.roomRx
     implementation compileDependencies.design
     implementation compileDependencies.cardview
+    implementation compileDependencies.bottomBar
     implementation compileDependencies.constraintLayout
     implementation compileDependencies.kotlin
     implementation compileDependencies.rxJava2

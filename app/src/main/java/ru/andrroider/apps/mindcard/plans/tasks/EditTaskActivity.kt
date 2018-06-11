@@ -11,6 +11,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import kotlinx.android.synthetic.main.activity_edit_task.*
 import ru.andrroider.apps.data.db.Plans
+import ru.andrroider.apps.mindcard.EDIT_TASK_ID
+import ru.andrroider.apps.mindcard.PLAN_ID
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.base.BaseMvpActivity
 import ru.andrroider.apps.mindcard.di.AppComponentInjector
@@ -22,8 +24,6 @@ import ru.andrroider.apps.mindcard.plans.creation.NewPlanView
 /**
  * Created by Jackson on 27/03/2018.
  */
-const val PLAN_ID = "PLAN_ID"
-const val EDIT_TASK_ID = "EDIT_TASK_ID"
 
 fun startNewTaskActivity(context: Context, planId: Long? = null, editItemId: Long? = null) {
     val intent = Intent(context, NewTaskActivity::class.java)

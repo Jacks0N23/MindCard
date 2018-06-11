@@ -25,10 +25,10 @@ class PlansComponent(private val activity: Activity?,
     private val plansItems = mutableListOf<ViewTyped>()
     private val onCardClickListener: (View) -> Unit = {
         fragmentManager?.beginTransaction()
-            ?.replace(R.id.fragmentContainer,
-                    newTasksInstance(it.tag.asType(), it.findView<TextView>(R.id.itemTitle).text))
-            ?.addToBackStack(null)
-            ?.commit()
+                ?.replace(R.id.base_container,
+                        newTasksInstance(it.tag.asType(), it.findView<TextView>(R.id.itemTitle).text))
+                ?.addToBackStack(null)
+                ?.commit()
     }
     private val onCardLongClickListener: (View) -> Boolean = { view ->
         popupMenu(view)?.show()
@@ -43,7 +43,7 @@ class PlansComponent(private val activity: Activity?,
     }
     private val deleteConfirmationDialog = { cardId: Long ->
         activity?.createDeleteConfirmationDialog({ deleteCardAction(cardId) })
-            ?.show()
+                ?.show()
     }
     private val popupMenu = { view: View ->
         activity?.let { activity ->

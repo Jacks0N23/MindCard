@@ -6,6 +6,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_tasks.*
 import ru.andrroider.apps.business.plans.TaskUi
+import ru.andrroider.apps.mindcard.PLAN_ID
+import ru.andrroider.apps.mindcard.PLAN_TITLE
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.base.BaseMVPFragment
 import ru.andrroider.apps.mindcard.base.BaseMvpActivity
@@ -66,19 +68,13 @@ class TasksFragment : BaseMVPFragment(),
         this.planId = planId
     }
 
-    override fun showTasks(tasks: List<TaskUi>) {
-        adapter.setItems(tasks)
-    }
-
-    override fun showError(throwable: Throwable) {
-        showErrorWithSnackbar(throwable)
-    }
-
     override fun taskSuccessfullyDeleted(indexOfDeletedItem: Int) {
         adapter.removeItem(indexOfDeletedItem)
     }
 
-    override fun onBackPressed(): Boolean {
-        return presenter.popPlanAndReloadData()
-    }
+    override fun showTasks(tasks: List<TaskUi>) = adapter.setItems(tasks)
+
+    override fun showError(throwable: Throwable) = showErrorWithSnackbar(throwable)
+
+    override fun onBackPressed() = presenter.popPlanAndReloadData()
 }

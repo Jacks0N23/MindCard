@@ -10,14 +10,12 @@ import org.intellij.lang.annotations.Language
  */
 @Entity(tableName = "plans")
 data class Plans(
+        @ColumnInfo(name = "id")
+        @PrimaryKey(autoGenerate = true) var id: Long = 0L,
+        val planId: Long? = null,
         val title: String,
         val description: String,
-        val planId: Long? = null,
-        val colorInt: Int = 0,
-        val fromTimestamp: Long,
-        val toTimestamp: Long,
-        @ColumnInfo(name = "id")
-        @PrimaryKey(autoGenerate = true) var id: Long = 0L
+        val colorInt: Int = 0
 )
 
 @Dao
@@ -45,7 +43,7 @@ interface PlansDao {
     fun deleteById(deleteItemId: Long): Int
 }
 
-@Database(entities = [(Plans::class)], version = 2)
+@Database(entities = [(Plans::class)], version = 1)
 abstract class PlansDatabase : RoomDatabase() {
 
     abstract fun plansDao(): PlansDao

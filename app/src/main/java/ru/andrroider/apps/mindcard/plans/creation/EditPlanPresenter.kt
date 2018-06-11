@@ -18,7 +18,7 @@ class EditPlanPresenter(private val addPlanInteractor: AddPlanInteractor,
                         private val updateInteractor: UpdateInteractor) : BaseMvpPresenter<NewPlanView>() {
 
     fun addNewItem(title: String, description: String, color: Int = 0, planId: Long? = null) {
-        val plan = Plans(title, description, planId, color)
+        val plan = Plans(planId = planId, title = title, description = description, colorInt = color)
         addSubscription(addPlanInteractor(plan).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe({ viewState.finishAfterCreation() }, viewState::showError))
     }
@@ -29,7 +29,7 @@ class EditPlanPresenter(private val addPlanInteractor: AddPlanInteractor,
     }
 
     fun updateItem(title: String, description: String, id: Long, color: Int = 0, planId: Long? = null) {
-        val plan = Plans(title, description, planId, color, id)
+        val plan = Plans(id = id, planId = planId, title = title, description = description, colorInt = color)
         addSubscription(updateInteractor(plan)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
