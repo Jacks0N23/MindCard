@@ -1,6 +1,6 @@
 ext {
     //versions
-    kotlinVersion = '1.2.41'
+    kotlinVersion = '1.2.50'
     supportVersion = '28.0.0-alpha1'
     retrofitVersion = '2.3.0'
     firebaseVersion = '11.6.0'
@@ -9,7 +9,7 @@ ext {
     daggerVersion = '2.15'
     colorPickerVersion = '1.0.2'
 
-    androidPlugin = 'com.android.tools.build:gradle:3.2.0-alpha17'
+    androidPlugin = 'com.android.tools.build:gradle:3.2.0-beta01'
     kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
     compileDependencies = [
@@ -32,7 +32,8 @@ ext {
             moxyAndroid           : "com.arello-mobile:moxy-android:$moxyVersion",
             moxyAppCompat         : "com.arello-mobile:moxy-app-compat:$moxyVersion",
             dagger                : "com.google.dagger:dagger:$daggerVersion",
-            colorPicker           : "com.jaredrummler:colorpicker:$colorPickerVersion"
+            colorPicker           : "com.jaredrummler:colorpicker:$colorPickerVersion",
+            android_week_view     : "com.github.quivr:android-week-view:2.2.0"
     ]
 
     aptDependencies = [

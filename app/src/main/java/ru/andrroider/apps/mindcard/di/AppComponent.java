@@ -12,6 +12,7 @@ import ru.andrroider.apps.mindcard.plans.creation.EditPlanPresenter;
 import ru.andrroider.apps.mindcard.plans.di.PlansModule;
 import ru.andrroider.apps.mindcard.plans.tasks.TasksPresenter;
 import ru.andrroider.apps.mindcard.plans.tasks.di.TasksModule;
+import ru.andrroider.apps.mindcard.scedule.SchedulePresenter;
 
 @ApplicationContext
 @Singleton
@@ -22,4 +23,6 @@ public interface AppComponent {
     EditPlanPresenter newPlanPresenter();
 
     TasksPresenter tasksPresenter();
+
+    SchedulePresenter schedulePresenter();
 }

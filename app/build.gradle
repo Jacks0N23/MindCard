@@ -54,6 +54,7 @@ dependencies {
     implementation compileDependencies.moxyAppCompat
     implementation compileDependencies.dagger
     implementation compileDependencies.colorPicker
+    implementation compileDependencies.android_week_view
     kapt aptDependencies.dagger
     kapt aptDependencies.moxy
     testImplementation testDependencies.junit

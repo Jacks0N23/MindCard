@@ -76,10 +76,12 @@ class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
     private fun saveWithBlankCheck() {
         when {
             planEditId > -1 -> presenter.updateItem(itemTitle.text.toString(), itemDescription.text.toString(),
-                    planEditId)
+                                                    planEditId)
             itemTitle.text.isNullOrBlank() -> taskTitleContainer.error = getString(R.string.title_error)
             else -> {
-                presenter.addNewItem(itemTitle.text.toString(), itemDescription.text.toString())
+                val plan = Plans(title = itemTitle.text.toString(),
+                                 description = itemDescription.text.toString())
+                presenter.addNewItem(plan)
             }
         }
     }

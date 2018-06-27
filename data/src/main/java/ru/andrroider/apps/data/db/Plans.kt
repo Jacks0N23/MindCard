@@ -15,7 +15,9 @@ data class Plans(
         val planId: Long? = null,
         val title: String,
         val description: String,
-        val colorInt: Int = 0
+        val colorInt: Int = 0,
+        val fromTimestamp: Long? = null,
+        val toTimestamp: Long? = null
 )
 
 @Dao
@@ -24,6 +26,10 @@ interface PlansDao {
     @Language("RoomSql")
     @Query("SELECT * FROM plans where planId IS NULL ")
     fun getAllPlans(): Flowable<List<Plans>>
+
+    @Language("RoomSql")
+    @Query("SELECT * FROM plans where fromTimestamp is not null and toTimestamp is not null")
+    fun getScheduledTasks(): Flowable<List<Plans>>
 
     @Language("RoomSql")
     @Query("SELECT * FROM plans where id = :itemId ")
@@ -43,7 +49,7 @@ interface PlansDao {
     fun deleteById(deleteItemId: Long): Int
 }
 
-@Database(entities = [(Plans::class)], version = 1)
+@Database(entities = [(Plans::class)], version = 2)
 abstract class PlansDatabase : RoomDatabase() {
 
     abstract fun plansDao(): PlansDao

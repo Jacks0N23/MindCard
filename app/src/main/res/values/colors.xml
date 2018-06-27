@@ -8,6 +8,10 @@
     <color name="secondary_text">#757575</color>
     <color name="new_plan_background">@color/md_amber_500</color>
     <color name="white">#ffffff</color>
+    <color name="hint_color">#BDBDBD</color>
+    <color name="timeline_background">#FAFAFA</color>
+    <color name="now_line">#FF5252</color>
+
 
     <array name="task_colors">
         <item>@color/md_red_500</item>
