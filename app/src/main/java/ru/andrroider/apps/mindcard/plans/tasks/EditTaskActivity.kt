@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.text.format.DateFormat
 import android.view.WindowManager
@@ -60,7 +61,7 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
     private val planId by lazy { intent.getLongExtra(PLAN_ID, -1) }
     private val taskId by lazy { intent.getLongExtra(EDIT_TASK_ID, -1) }
     private val colorPickerBuilder = ColorPickerDialog.newBuilder()
-    private var preselectedColor: Int = 0
+    private var preselectedColor: Int = ContextCompat.getColor(AppComponentInjector.component().appContext(), R.color.md_green_500)
     private val calendarStart = Calendar.getInstance()
     private val calendarEnd = Calendar.getInstance()
 
@@ -133,7 +134,7 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
                 .setDialogType(ColorPickerDialog.TYPE_PRESETS)
                 .setPresets(resources.getIntArray(R.array.task_colors))
                 .setAllowCustom(false)
-                .setDialogId(0)
+                .setDialogId(101)
                 .setColor(preselectedColor)
                 .setSelectedButtonText(R.string.pick_color_select)
         val colorPickerDialog = colorPickerBuilder.create()

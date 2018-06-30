@@ -1,7 +1,6 @@
 package ru.andrroider.apps.mindcard.scedule
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.di.AppComponentInjector
-import ru.andrroider.apps.mindcard.extentions.asType
 import ru.andrroider.apps.mindcard.extentions.inflate
 import java.text.SimpleDateFormat
 import java.util.*
@@ -85,10 +83,7 @@ class ScheduleFragment : MvpAppCompatFragment(), MonthLoader.MonthChangeListener
     }
 
     override fun onMonthChange(newYear: Int, newMonth: Int): List<WeekViewEvent> {
-        val monthEvents = weekViewEvent.filter { it.eventMatches(newYear, newMonth) }
-        monthEvents.forEach { it.color = ContextCompat.getColor(context.asType(), R.color.now_line) }
-        return monthEvents
-
+        return weekViewEvent.filter { it.eventMatches(newYear, newMonth) }
     }
 }
 

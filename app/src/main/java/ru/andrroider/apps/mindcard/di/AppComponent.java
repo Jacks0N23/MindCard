@@ -4,6 +4,8 @@ package ru.andrroider.apps.mindcard.di;
  * Created by Jackson on 03/02/2018.
  */
 
+import android.content.Context;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -18,6 +20,9 @@ import ru.andrroider.apps.mindcard.scedule.SchedulePresenter;
 @Singleton
 @Component(modules = {AppModule.class, DatabaseModule.class, PlansModule.class, TasksModule.class})
 public interface AppComponent {
+
+    Context appContext();
+
     PlansPresenter planPresenter();
 
     EditPlanPresenter newPlanPresenter();
