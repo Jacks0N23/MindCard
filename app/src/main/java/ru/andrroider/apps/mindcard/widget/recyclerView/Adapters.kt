@@ -9,10 +9,6 @@ import ru.andrroider.apps.mindcard.R
 /**
  * Created by Jackson on 03/02/2018.
  */
-object LoadMoreItem : ViewTyped {
-    override val viewType: Int = R.layout.item_loading
-}
-
 object ProgressItem : ViewTyped {
     override val viewType: Int = R.layout.item_loading
 }

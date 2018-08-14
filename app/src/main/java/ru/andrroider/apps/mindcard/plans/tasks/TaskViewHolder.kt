@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.TextView
 import ru.andrroider.apps.business.plans.TaskUi
 import ru.andrroider.apps.mindcard.R
-import ru.andrroider.apps.mindcard.extentions.findView
 import ru.andrroider.apps.mindcard.extentions.hide
 import ru.andrroider.apps.mindcard.extentions.show
 import ru.andrroider.apps.mindcard.widget.recyclerView.BaseViewHolder
@@ -15,9 +14,9 @@ class TaskViewHolder(view: View,
                      onCardClickListener: (View) -> Unit,
                      onCardLongClickListener: (View) -> Boolean) : BaseViewHolder<TaskUi>(view) {
 
-    private val title: TextView = view.findView(R.id.itemTitle)
-    private val description: TextView = view.findView(R.id.itemDescription)
-    private val taskColor: FloatingActionButton = view.findView(R.id.taskColor)
+    private val title: TextView = view.findViewById(R.id.itemTitle)
+    private val description: TextView = view.findViewById(R.id.itemDescription)
+    private val taskColor: FloatingActionButton = view.findViewById(R.id.taskColor)
 
     init {
         itemView.setOnClickListener(onCardClickListener)

@@ -20,6 +20,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            applicationIdSuffix ".debug"
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -30,8 +34,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
     }
     buildToolsVersion '28.0.0 rc2'
-    dexOptions {
-    }
 }
 
 dependencies {

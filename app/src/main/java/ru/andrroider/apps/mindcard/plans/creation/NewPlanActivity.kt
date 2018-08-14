@@ -36,12 +36,12 @@ class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
     private val quitDialog by lazy {
         AlertDialog.Builder(this@NewPlanActivity)
                 .setTitle(R.string.save)
-                .setPositiveButton(R.string.yes, { _, _ ->
+                .setPositiveButton(R.string.yes) { _, _ ->
                     saveWithBlankCheck()
-                })
-                .setNegativeButton(R.string.no, { _, _ ->
+                }
+                .setNegativeButton(R.string.no) { _, _ ->
                     finish()
-                })
+                }
                 .create()
     }
     private val planEditId by lazy { intent.getLongExtra(PLAN_EDIT_ID, -1) }
@@ -75,8 +75,9 @@ class NewPlanActivity : BaseMvpActivity(R.layout.activity_new_plan),
 
     private fun saveWithBlankCheck() {
         when {
-            planEditId > -1 -> presenter.updateItem(itemTitle.text.toString(), itemDescription.text.toString(),
-                                                    planEditId)
+            planEditId > -1 -> presenter.updateItem(Plans(planId = planEditId,
+                                                          title = itemTitle.text.toString(),
+                                                          description = itemDescription.text.toString()))
             itemTitle.text.isNullOrBlank() -> taskTitleContainer.error = getString(R.string.title_error)
             else -> {
                 val plan = Plans(title = itemTitle.text.toString(),

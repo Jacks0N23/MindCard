@@ -10,7 +10,6 @@ import ru.andrroider.apps.data.ParametrizedAction
 import ru.andrroider.apps.data.ViewTyped
 import ru.andrroider.apps.mindcard.R
 import ru.andrroider.apps.mindcard.extentions.asType
-import ru.andrroider.apps.mindcard.extentions.findView
 import ru.andrroider.apps.mindcard.plans.tasks.TasksHolderFactory
 import ru.andrroider.apps.mindcard.plans.tasks.TasksPresenter
 import ru.andrroider.apps.mindcard.widget.createDeleteConfirmationDialog
@@ -24,7 +23,7 @@ class TaskComponent(private val activity: Activity?,
     private val tasksItems = mutableListOf<ViewTyped>()
     private val onCardClickListener: (View) -> Unit = {
         tasksPresenter.addPlanToNodeAndLoadData(
-                it.findView<TextView>(R.id.itemTitle).text.asType(),
+                it.findViewById<TextView>(R.id.itemTitle).text.asType(),
                 it.tag.asType())
     }
     private val onCardLongClickListener: (View) -> Boolean = { view ->
@@ -39,7 +38,7 @@ class TaskComponent(private val activity: Activity?,
         }
     }
     private val deleteConfirmationDialog = { cardId: Long ->
-        activity?.createDeleteConfirmationDialog({ deleteCardAction(cardId) })
+        activity?.createDeleteConfirmationDialog { deleteCardAction(cardId) }
                 ?.show()
     }
     private val popupMenu = { view: View ->
@@ -54,5 +53,5 @@ class TaskComponent(private val activity: Activity?,
         }
     }
     val adapter = Adapter<TaskUi>(tasksItems,
-            holderFactory = TasksHolderFactory(onCardClickListener, onCardLongClickListener))
+                                  holderFactory = TasksHolderFactory(onCardClickListener, onCardLongClickListener))
 }

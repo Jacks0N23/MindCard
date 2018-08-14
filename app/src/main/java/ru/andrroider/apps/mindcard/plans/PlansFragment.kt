@@ -12,19 +12,18 @@ import ru.andrroider.apps.mindcard.di.AppComponentInjector
 import ru.andrroider.apps.mindcard.plans.creation.startNewPlanActivity
 import ru.andrroider.apps.mindcard.plans.di.PlansComponent
 
-class PlansFragment : BaseMVPFragment(),
-        PlansView {
+class PlansFragment : BaseMVPFragment(), PlansView {
 
     override val layoutId: Int = R.layout.fragment_plans
     private val component by lazy {
         PlansComponent(activity,
-                fragmentManager,
-                deleteCardAction = {
-                    presenter.deletePlan(it)
-                },
-                editCardAction = {
-                    activity?.let { activity -> startNewPlanActivity(activity, it) }
-                })
+                       fragmentManager,
+                       deleteCardAction = {
+                           presenter.deletePlan(it)
+                       },
+                       editCardAction = {
+                           activity?.let { activity -> startNewPlanActivity(activity, it) }
+                       })
     }
     private val adapter by lazy { component.adapter }
     @InjectPresenter

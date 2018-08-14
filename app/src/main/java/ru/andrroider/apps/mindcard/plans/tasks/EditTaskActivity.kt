@@ -31,6 +31,9 @@ import java.util.*
  * Created by Jackson on 27/03/2018.
  */
 
+const val TIME_FORMAT = "HH:mm"
+const val DATE_FORMAT = "dd/MM/yyyy"
+
 fun startNewTaskActivity(context: Context, planId: Long? = null, editItemId: Long? = null) {
     val intent = Intent(context, NewTaskActivity::class.java)
     intent.putExtra(PLAN_ID, planId)
@@ -59,16 +62,16 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
                 .create()
     }
     private val planId by lazy { intent.getLongExtra(PLAN_ID, -1) }
-    private val taskId by lazy { intent.getLongExtra(EDIT_TASK_ID, -1) }
+    private val taskId by lazy { intent.getLongExtra(EDIT_TASK_ID, 0) }
     private val colorPickerBuilder = ColorPickerDialog.newBuilder()
     private var preselectedColor: Int = ContextCompat.getColor(AppComponentInjector.component().appContext(), R.color.md_green_500)
     private val calendarStart = Calendar.getInstance()
     private val calendarEnd = Calendar.getInstance()
 
-    lateinit var dateFromListener: DatePickerDialog.OnDateSetListener
-    lateinit var dateDueListener: DatePickerDialog.OnDateSetListener
-    lateinit var timeFromListener: TimePickerDialog.OnTimeSetListener
-    lateinit var timeDueListener: TimePickerDialog.OnTimeSetListener
+    private lateinit var dateFromListener: DatePickerDialog.OnDateSetListener
+    private lateinit var dateDueListener: DatePickerDialog.OnDateSetListener
+    private lateinit var timeFromListener: TimePickerDialog.OnTimeSetListener
+    private lateinit var timeDueListener: TimePickerDialog.OnTimeSetListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -77,13 +80,9 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-
-        if (taskId > -1) {
-            presenter.loadTaskForEditing(taskId)
-        }
+        if (taskId > -1) presenter.loadTaskForEditing(taskId)
 
         saveTask.setOnClickListener { saveWithBlankCheck() }
-
         taskTitle.setAfterTextChangedAction { text ->
             taskTitleContainer.error = if (text.isNullOrBlank()) getString(R.string.title_error) else ""
         }
@@ -94,27 +93,17 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
     }
 
     private fun saveWithBlankCheck() {
+        val task = Plans(taskId,
+                         planId,
+                         taskTitle.text.toString(),
+                         taskDescription.text.toString(),
+                         taskColor.backgroundTintList!!.defaultColor,
+                         calendarStart.timeInMillis,
+                         calendarEnd.timeInMillis)
         when {
             taskTitle.text.isNullOrBlank() -> taskTitleContainer.error = getString(R.string.title_error)
-            taskId > -1 -> {
-                presenter.updateItem(
-                        taskTitle.text.toString(),
-                        taskDescription.text.toString(),
-                        taskId,
-                        taskColor.backgroundTintList!!.defaultColor,
-                        planId)
-            }
-            else -> {
-                val planId = intent.getLongExtra(PLAN_ID, -1)
-                val plan = Plans(planId = planId,
-                                 title = taskTitle.text.toString(),
-                                 description = taskDescription.text.toString(),
-                                 colorInt = taskColor.backgroundTintList!!.defaultColor,
-                                 fromTimestamp = calendarStart.timeInMillis,
-                                 toTimestamp = calendarEnd.timeInMillis)
-
-                presenter.addNewItem(plan)
-            }
+            taskId > -1 -> presenter.updateItem(task)
+            else -> presenter.addNewItem(task)
         }
     }
 
@@ -126,6 +115,11 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
         taskColor.backgroundTintList = ColorStateList.valueOf(colorInt)
         preselectedColor = colorInt
         dyeColorElements(preselectedColor)
+        plans.fromTimestamp?.let { timeFrom ->
+            calendarStart.apply { timeInMillis = timeFrom }
+            updateTimeText()
+        }
+        plans.toTimestamp?.let { timeFrom -> calendarEnd.apply { timeInMillis = timeFrom } }
     }
 
     private fun createColorPicker(): ColorPickerDialog {
@@ -156,38 +150,47 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
         preselectedColor = color
     }
 
-    fun setupDateDialogPickers() {
+    private fun setupDateDialogPickers() {
 
-        dateFromListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            calendarStart.set(Calendar.YEAR, year)
-            calendarStart.set(Calendar.MONTH, monthOfYear)
-            calendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        dateFromListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            calendarStart.apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, monthOfYear)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
             updateDateText()
         }
 
-        dateDueListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            calendarEnd.set(Calendar.YEAR, year)
-            calendarEnd.set(Calendar.MONTH, monthOfYear)
-            calendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        dateDueListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            calendarEnd.apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, monthOfYear)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
             updateDateText()
         }
     }
 
-    fun setupTimeDialogPickers() {
-        timeFromListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-            calendarStart.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            calendarStart.set(Calendar.MINUTE, minute)
+    private fun setupTimeDialogPickers() {
+        timeFromListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            calendarStart.apply {
+                set(Calendar.HOUR_OF_DAY, hourOfDay)
+                set(Calendar.MINUTE, minute)
+            }
             updateTimeText()
         }
 
-        timeDueListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-            calendarEnd.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            calendarEnd.set(Calendar.MINUTE, minute)
+        timeDueListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            calendarEnd.apply {
+                set(Calendar.HOUR_OF_DAY, hourOfDay)
+                set(Calendar.MINUTE, minute)
+
+            }
             updateTimeText()
         }
     }
 
-    fun initDateDialogListeners(start: Calendar, end: Calendar) {
+    private fun initDateDialogListeners(start: Calendar, end: Calendar) {
         dateFrom.setOnClickListener {
             val datePickerDialogF = DatePickerDialog(dateFrom.context, dateFromListener, start.get(Calendar.YEAR),
                                                      start.get(Calendar.MONTH), start.get(Calendar.DAY_OF_MONTH))
@@ -218,58 +221,23 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
     }
 
     private fun updateDateText() {
-        val format = "dd/MM/yyyy"
-        val simpleDateFormat = SimpleDateFormat(format, Locale.ROOT)
-
+        val simpleDateFormat = SimpleDateFormat(DATE_FORMAT, Locale.ROOT)
         dateFrom.text = simpleDateFormat.format(calendarStart.time)
         dateDue.text = simpleDateFormat.format(calendarEnd.time)
     }
 
     private fun updateTimeText() {
-        val format = "HH:mm"
-        val simpleDateFormat = SimpleDateFormat(format, Locale.ROOT)
-
+        val simpleDateFormat = SimpleDateFormat(TIME_FORMAT, Locale.ROOT)
         timeFrom.text = simpleDateFormat.format(calendarStart.time)
-
-//        if (switcher) {
         calendarEnd.set(Calendar.HOUR_OF_DAY, calendarStart.get(Calendar.HOUR_OF_DAY) + 1)
         calendarEnd.set(Calendar.MINUTE, calendarStart.get(Calendar.MINUTE))
         updateDateText()
-//        }
-
         timeDue.text = simpleDateFormat.format(calendarEnd.time)
     }
 
-    private fun updateDateText(calendarStart: Calendar, calendarEnd: Calendar) {
-        val format = "dd/MM/yyyy"
-        val simpleDateFormat = SimpleDateFormat(format, Locale.ROOT)
+    override fun finishAfterCreation() = finish()
 
-        dateFrom.text = simpleDateFormat.format(calendarStart.time)
-        dateDue.text = simpleDateFormat.format(calendarEnd.time)
-    }
-
-    private fun updateTimeText(calendarStart: Calendar, calendarEnd: Calendar) {
-        val format = "HH:mm"
-        val simpleDateFormat = SimpleDateFormat(format, Locale.ROOT)
-
-        timeFrom.text = simpleDateFormat.format(calendarStart.time)
-
-//        if (switcher) {
-        calendarEnd.set(Calendar.HOUR_OF_DAY, this.calendarStart.get(Calendar.HOUR_OF_DAY) + 1)
-        calendarEnd.set(Calendar.MINUTE, this.calendarStart.get(Calendar.MINUTE))
-        updateDateText()
-//        }
-
-        timeDue.text = simpleDateFormat.format(calendarEnd.time)
-    }
-
-    override fun finishAfterCreation() {
-        finish()
-    }
-
-    override fun showError(throwable: Throwable) {
-        showErrorWithSnackbar(throwable)
-    }
+    override fun showError(throwable: Throwable) = showErrorWithSnackbar(throwable)
 
     override fun onBackPressed() {
         super.onBackPressed()

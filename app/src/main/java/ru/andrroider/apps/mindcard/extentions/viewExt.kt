@@ -1,6 +1,5 @@
 package ru.andrroider.apps.mindcard.extentions
 
-import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,8 +15,6 @@ fun ViewGroup.inflate(@LayoutRes layout: Int, attachToRoot: Boolean = false): Vi
     return LayoutInflater.from(context).inflate(layout, this, attachToRoot)
 }
 
-inline fun <T : View> View.findView(@IdRes id: Int): T = findViewById(id)
-
 fun View.show() {
     visibility = View.VISIBLE
 }
@@ -26,19 +23,10 @@ fun View.hide() {
     visibility = View.GONE
 }
 
-fun EditText.setAfterTextChangedAction(action: (Editable?)-> Unit) {
+fun EditText.setAfterTextChangedAction(action: (Editable?) -> Unit) {
     addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(text: Editable?) {
-            action(text)
-        }
-
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-        }
-
+        override fun afterTextChanged(text: Editable?) = action(text)
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
     })
 }

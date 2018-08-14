@@ -27,8 +27,7 @@ class EditPlanPresenter(private val addPlanInteractor: AddPlanInteractor,
                 AndroidSchedulers.mainThread()).subscribe(viewState::fillForEditing, viewState::showError))
     }
 
-    fun updateItem(title: String, description: String, id: Long, color: Int = 0, planId: Long? = null) {
-        val plan = Plans(id = id, planId = planId, title = title, description = description, colorInt = color)
+    fun updateItem(plan: Plans) {
         addSubscription(updateInteractor(plan)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
