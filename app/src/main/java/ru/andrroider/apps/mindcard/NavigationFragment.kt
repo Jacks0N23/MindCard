@@ -35,7 +35,7 @@ class NavigationFragment : Fragment() {
             defaultBackgroundColor = ContextCompat.getColor(context.asType(), R.color.colorPrimaryDark)
             // Change colors
             accentColor = ContextCompat.getColor(context.asType(), R.color.white)
-            inactiveColor = ContextCompat.getColor(context.asType(), R.color.md_grey_500)
+            inactiveColor = ContextCompat.getColor(context.asType(), R.color.md_white_inactive)
             setOnTabSelectedListener { position, _ ->
                 when (position) {
                     0 -> {

@@ -55,5 +55,6 @@
     <color name="md_grey_500">#9e9e9e</color>
     <color name="md_black">#000000</color>
     <color name="md_blue_grey_500">#607d8b</color>
+    <color name="md_white_inactive">#ccffffff</color>
 
 </resources>
