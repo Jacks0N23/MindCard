@@ -48,25 +48,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="45dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:adjustViewBounds="false"
-                android:src="@drawable/ic_description" />
+                android:src="@drawable/ic_description"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/descriptionContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -76,14 +74,12 @@
                     android:id="@+id/itemDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="0dp"
                     android:ems="10"
                     android:hint="@string/short_description"
                     android:inputType="textCapSentences|textMultiLine"
                     android:textSize="16sp"
-                    tools:text="description" />
+                    tools:text="description"/>
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </LinearLayout>
