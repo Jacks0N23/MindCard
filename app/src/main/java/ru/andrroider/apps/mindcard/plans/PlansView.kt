@@ -8,7 +8,7 @@ import ru.andrroider.apps.business.plans.PlanUi
  */
 interface PlansView : MvpView {
     fun showPlans(plans: List<PlanUi>)
-    fun showEmpty()
+    fun showEmptyPlans()
     fun showError(throwable: Throwable)
     fun planSuccessfullyDeleted(indexOfDeletedItem: Int)
 }

@@ -25,7 +25,7 @@ class PlansPresenter(private val getAllPlansInteractor: GetAllPlansInteractor,
                 if (plans.isNotEmpty()) {
                     viewState.showPlans(plans)
                 } else {
-                    viewState.showEmpty()
+                    viewState.showEmptyPlans()
                 }
             }, viewState::showError))
     }

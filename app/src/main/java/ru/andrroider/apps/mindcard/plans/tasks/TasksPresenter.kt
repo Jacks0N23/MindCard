@@ -53,10 +53,14 @@ class TasksPresenter(private val getTasksByPlanIdInteractor: GetTasksByPlanIdInt
 
     private fun loadAllTasksByPlanId(planId: Long) {
         addSubscription(getTasksByPlanIdInteractor(planId).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(
-                {
+                AndroidSchedulers.mainThread()).subscribe({
                     tasks = it
-                    viewState.showTasks(tasks)
+
+                    if (tasks.isNotEmpty()) {
+                        viewState.showTasks(tasks)
+                    } else {
+                        viewState.showEmptyTasks()
+                    }
                 },
                 viewState::showError))
     }

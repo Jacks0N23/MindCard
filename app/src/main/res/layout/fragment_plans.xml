@@ -30,7 +30,7 @@
         tools:listitem="@layout/item_plan"/>
 
     <LinearLayout
-        android:id="@+id/emptyList"
+        android:id="@+id/emptyPlanList"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:gravity="center_horizontal"
-            android:text="@string/empty_list"/>
+            android:text="@string/empty_plan_list"/>
 
     </LinearLayout>
 

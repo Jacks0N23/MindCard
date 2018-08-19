@@ -21,5 +21,6 @@
     <string name="due">До</string>
     <string name="from">С</string>
     <string name="time">Время</string>
-    <string name="empty_list">А планов то нет</string>
+    <string name="empty_plan_list">А планов то нет</string>
+    <string name="empty_task_list">Чего ты ждешь? Создай таск!</string>
 </resources>
