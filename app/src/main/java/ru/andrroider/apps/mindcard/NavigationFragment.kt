@@ -59,7 +59,7 @@ class NavigationFragment : Fragment() {
                 }
             }
             titleState = AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE_FORCE
-            currentItem = 0
+            currentItem = PLANS_TAB
         }
     }
 }
