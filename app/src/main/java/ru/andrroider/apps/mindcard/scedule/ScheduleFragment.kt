@@ -32,19 +32,10 @@ class ScheduleFragment : MvpAppCompatFragment(), MonthLoader.MonthChangeListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.loadAllScheduledTasks()
+
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
         weekView.monthChangeListener = this
-
-        // Show a toast message about the touched event.
-//        weekView.setOnEventClickListener(this)
-
-
-        // Set long press listener for events.
-//        weekView.eventLongPressListener = this
-
-        // Set up a date time interpreter to interpret how the date and time will be formatted in
-        // the week view. This is optional.
         setupDateTimeInterpreter(false)
 
     }
@@ -53,7 +44,6 @@ class ScheduleFragment : MvpAppCompatFragment(), MonthLoader.MonthChangeListener
         weekViewEvent.clear()
         weekViewEvent.addAll(events)
         weekView.notifyDatasetChanged()
-
     }
 
     /**
@@ -64,7 +54,9 @@ class ScheduleFragment : MvpAppCompatFragment(), MonthLoader.MonthChangeListener
     private fun setupDateTimeInterpreter(shortDate: Boolean) {
         weekView.dateTimeInterpreter = object : DateTimeInterpreter {
             override fun interpretTime(hour: Int, minutes: Int): String {
-                return hour.toString() + "" //> 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
+                // To use 12hr clock:
+                // > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
+                return hour.toString() + ""
             }
 
             override fun interpretDate(date: Calendar): String {
