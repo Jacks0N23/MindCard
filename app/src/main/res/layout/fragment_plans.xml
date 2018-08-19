@@ -7,6 +7,7 @@
     android:id="@+id/container">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarPlans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -27,6 +28,32 @@
         android:layout_marginTop="?actionBarSize"
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/item_plan"/>
+
+    <LinearLayout
+        android:id="@+id/emptyList"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/appBarPlans"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/ic_empty_list"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:gravity="center_horizontal"
+            android:text="@string/empty_list"/>
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
