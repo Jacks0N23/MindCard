@@ -43,11 +43,19 @@ class PlansFragment : BaseMVPFragment(), PlansView {
     }
 
     override fun showPlans(plans: List<PlanUi>) {
+        emptyList.visibility = View.GONE
+        plansList.visibility = View.VISIBLE
+
         adapter.setItems(plans)
         adapter.notifyDataSetChanged()
     }
 
     override fun showError(throwable: Throwable) {
         showErrorWithSnackbar(throwable)
+    }
+
+    override fun showEmpty() {
+        emptyList.visibility = View.VISIBLE
+        plansList.visibility = View.GONE
     }
 }
