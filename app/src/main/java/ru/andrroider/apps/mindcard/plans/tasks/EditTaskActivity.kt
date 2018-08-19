@@ -87,6 +87,8 @@ class NewTaskActivity : BaseMvpActivity(R.layout.activity_edit_task),
             taskTitleContainer.error = if (text.isNullOrBlank()) getString(R.string.title_error) else ""
         }
         taskColorContainer.setOnClickListener { createColorPicker().show(fragmentManager, "") }
+        updateDateText()
+        updateTimeText()
         setupDateDialogPickers()
         setupTimeDialogPickers()
         initDateDialogListeners(calendarStart, calendarEnd)

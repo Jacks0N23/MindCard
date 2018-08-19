@@ -108,7 +108,7 @@
                     android:id="@+id/dateFrom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.75"
+                    android:layout_weight="0.65"
                     android:hint="@string/date"/>
 
                 <TextView
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/time"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.35"
                     android:textColorHint="@color/hint_color" />
             </LinearLayout>
 
@@ -127,7 +127,7 @@
                     android:id="@+id/dateDue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.75"
+                    android:layout_weight="0.65"
                     android:hint="@string/date"/>
 
                 <TextView
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/time"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.35"
                     android:textColorHint="@color/hint_color" />
             </LinearLayout>
         </LinearLayout>
