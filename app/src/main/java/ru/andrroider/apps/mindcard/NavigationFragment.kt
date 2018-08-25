@@ -14,6 +14,9 @@ import ru.andrroider.apps.mindcard.extentions.inflate
 import ru.andrroider.apps.mindcard.plans.PlansFragment
 import ru.andrroider.apps.mindcard.scedule.ScheduleFragment
 
+const val PLANS_TAB = 0
+const val SCHEDULE_TAB = 1
+
 class NavigationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,16 +38,16 @@ class NavigationFragment : Fragment() {
             defaultBackgroundColor = ContextCompat.getColor(context.asType(), R.color.colorPrimaryDark)
             // Change colors
             accentColor = ContextCompat.getColor(context.asType(), R.color.white)
-            inactiveColor = ContextCompat.getColor(context.asType(), R.color.md_grey_500)
+            inactiveColor = ContextCompat.getColor(context.asType(), R.color.md_white_inactive)
             setOnTabSelectedListener { position, _ ->
                 when (position) {
-                    0 -> {
+                    PLANS_TAB -> {
                         fragmentManager?.beginTransaction()
                                 ?.replace(R.id.nav_container, PlansFragment())
                                 ?.commit()
                         true
                     }
-                    1 -> {
+                    SCHEDULE_TAB -> {
                         fragmentManager?.beginTransaction()
                                 ?.replace(R.id.nav_container, ScheduleFragment())
                                 ?.commit()
@@ -56,7 +59,7 @@ class NavigationFragment : Fragment() {
                 }
             }
             titleState = AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE_FORCE
-            currentItem = 0
+            currentItem = PLANS_TAB
         }
     }
 }

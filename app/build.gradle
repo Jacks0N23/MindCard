@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 'android-P'
+    compileSdkVersion 28
     lintOptions {
         htmlReport true
         abortOnError true

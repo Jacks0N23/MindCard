@@ -21,7 +21,12 @@ class PlansPresenter(private val getAllPlansInteractor: GetAllPlansInteractor,
         addSubscription(getAllPlansInteractor().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe({
                 plans = it
-                viewState.showPlans(plans)
+
+                if (plans.isNotEmpty()) {
+                    viewState.showPlans(plans)
+                } else {
+                    viewState.showEmptyPlans()
+                }
             }, viewState::showError))
     }
 
