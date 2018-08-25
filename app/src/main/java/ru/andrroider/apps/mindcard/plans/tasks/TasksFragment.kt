@@ -2,7 +2,6 @@ package ru.andrroider.apps.mindcard.plans.tasks
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_tasks.*
@@ -74,19 +73,11 @@ class TasksFragment : BaseMVPFragment(),
     }
 
     override fun showTasks(tasks: List<TaskUi>) {
-        emptyTaskList.visibility = View.GONE
-        tasksList.visibility = View.VISIBLE
-
         adapter.setItems(tasks)
         adapter.notifyDataSetChanged()
     }
 
     override fun showError(throwable: Throwable) = showErrorWithSnackbar(throwable)
-
-    override fun showEmptyTasks() {
-        emptyTaskList.visibility = View.VISIBLE
-        tasksList.visibility = View.GONE
-    }
 
     override fun onBackPressed() = presenter.popPlanAndReloadData()
 }

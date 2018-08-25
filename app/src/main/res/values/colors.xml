@@ -11,6 +11,7 @@
     <color name="hint_color">#BDBDBD</color>
     <color name="timeline_background">#FAFAFA</color>
     <color name="now_line">#FF5252</color>
+    <color name="todayHeaderTextColor">#ff009688</color>
 
 
     <array name="task_colors">

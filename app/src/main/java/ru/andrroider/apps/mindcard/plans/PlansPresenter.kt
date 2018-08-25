@@ -18,23 +18,21 @@ class PlansPresenter(private val getAllPlansInteractor: GetAllPlansInteractor,
     private var plans = listOf<PlanUi>()
 
     fun loadAllPlans() {
-        addSubscription(getAllPlansInteractor().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                plans = it
-
-                if (plans.isNotEmpty()) {
-                    viewState.showPlans(plans)
-                } else {
-                    viewState.showEmptyPlans()
-                }
-            }, viewState::showError))
+        val disposable = getAllPlansInteractor().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                               plans = it
+                               viewState.showPlans(plans)
+                           }, viewState::showError)
+        addSubscription(disposable)
     }
 
     fun deletePlan(planId: Long) {
-        addSubscription(deleteInteractor(planId).toObservable<Boolean>().map {
-            plans.indexOfFirst { it.id == planId }
-        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            viewState.planSuccessfullyDeleted(it)
-        }, viewState::showError))
+        val disposable = deleteInteractor(planId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                               viewState.planSuccessfullyDeleted(plans.indexOfFirst { it.id == planId })
+                           }, viewState::showError)
+        addSubscription(disposable)
     }
 }

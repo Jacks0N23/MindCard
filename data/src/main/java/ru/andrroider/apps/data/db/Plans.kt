@@ -1,7 +1,15 @@
 package ru.andrroider.apps.data.db
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Database
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.Query
+import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.Update
 import io.reactivex.Flowable
 import org.intellij.lang.annotations.Language
 
@@ -46,7 +54,7 @@ interface PlansDao {
     fun getTasksByPlanId(planId: Long?): Flowable<List<Plans>>
 
     @Query("DELETE FROM plans WHERE id = :deleteItemId")
-    fun deleteById(deleteItemId: Long): Int
+    fun deleteById(deleteItemId: Long)
 }
 
 @Database(entities = [(Plans::class)], version = 2)

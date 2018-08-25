@@ -7,7 +7,7 @@ import ru.andrroider.apps.business.plans.TaskUi
 import ru.andrroider.apps.business.plans.tasks.DeleteInteractor
 import ru.andrroider.apps.business.plans.tasks.GetTasksByPlanIdInteractor
 import ru.andrroider.apps.mindcard.base.BaseMvpPresenter
-import java.util.*
+import java.util.LinkedList
 
 /**
  * Created by Jackson on 25/03/2018.
@@ -42,26 +42,23 @@ class TasksPresenter(private val getTasksByPlanIdInteractor: GetTasksByPlanIdInt
         return isLastLayer
     }
 
-
     fun deleteTask(taskId: Long) {
-        addSubscription(deleteInteractor(taskId).toObservable<Boolean>().map {
-            tasks.indexOfFirst { it.id == taskId }
-        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            viewState.taskSuccessfullyDeleted(it)
-        }, viewState::showError))
+        val disposable = deleteInteractor(taskId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                               viewState.taskSuccessfullyDeleted(tasks.indexOfFirst { it.id == taskId })
+                           }, viewState::showError)
+        addSubscription(disposable)
     }
 
     private fun loadAllTasksByPlanId(planId: Long) {
-        addSubscription(getTasksByPlanIdInteractor(planId).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe({
-                    tasks = it
+        val disposable = getTasksByPlanIdInteractor(planId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                               tasks = it
 
-                    if (tasks.isNotEmpty()) {
-                        viewState.showTasks(tasks)
-                    } else {
-                        viewState.showEmptyTasks()
-                    }
-                },
-                viewState::showError))
+                               viewState.showTasks(tasks)
+                           }, viewState::showError)
+        addSubscription(disposable)
     }
 }

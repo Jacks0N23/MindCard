@@ -16,10 +16,12 @@ class PlansHolderFactory(private val onCardClickListener: (View) -> Unit,
                          private val onCardLongClickListener: (View) -> Boolean) : HolderFactory {
 
     override fun invoke(viewGroup: ViewGroup, viewType: Int): BaseViewHolder<ViewTyped> {
+        val view = viewGroup.inflate(viewType)
         return when (viewType) {
             R.layout.item_plan -> {
-                PlanViewHolder(viewGroup.inflate(viewType), onCardClickListener, onCardLongClickListener)
+                PlanViewHolder(view, onCardClickListener, onCardLongClickListener)
             }
+            R.layout.item_empty_plans -> BaseViewHolder<ViewTyped>(view)
             else -> throw IllegalStateException("unknown viewType")
         }.asType()
     }

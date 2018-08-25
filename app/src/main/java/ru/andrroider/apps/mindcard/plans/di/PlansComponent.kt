@@ -15,9 +15,9 @@ import ru.andrroider.apps.mindcard.plans.PlansHolderFactory
 import ru.andrroider.apps.mindcard.plans.tasks.newTasksInstance
 import ru.andrroider.apps.mindcard.widget.createDeleteConfirmationDialog
 import ru.andrroider.apps.mindcard.widget.recyclerView.Adapter
+import ru.andrroider.apps.mindcard.widget.recyclerView.EmptyView
 
-class PlansComponent(private val activity: Activity?,
-                     private val fragmentManager: FragmentManager?,
+class PlansComponent(private val activity: Activity?, private val fragmentManager: FragmentManager?,
                      private val deleteCardAction: ParametrizedAction<Long>,
                      private val editCardAction: ParametrizedAction<Long>) {
 
@@ -41,7 +41,7 @@ class PlansComponent(private val activity: Activity?,
         }
     }
     private val deleteConfirmationDialog = { cardId: Long ->
-        activity?.createDeleteConfirmationDialog({ deleteCardAction(cardId) })
+        activity?.createDeleteConfirmationDialog { deleteCardAction(cardId) }
                 ?.show()
     }
     private val popupMenu = { view: View ->
@@ -56,5 +56,6 @@ class PlansComponent(private val activity: Activity?,
         }
     }
     val adapter = Adapter<PlanUi>(plansItems,
-            holderFactory = PlansHolderFactory(onCardClickListener, onCardLongClickListener))
+                                  EmptyView(R.layout.item_empty_plans),
+                                  holderFactory = PlansHolderFactory(onCardClickListener, onCardLongClickListener))
 }

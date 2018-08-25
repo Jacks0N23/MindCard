@@ -3,7 +3,11 @@ package ru.andrroider.apps.mindcard.widget.recyclerView
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import ru.andrroider.apps.data.*
+import ru.andrroider.apps.data.Add
+import ru.andrroider.apps.data.Inserted
+import ru.andrroider.apps.data.Moved
+import ru.andrroider.apps.data.Updates
+import ru.andrroider.apps.data.ViewTyped
 import ru.andrroider.apps.mindcard.R
 
 /**
@@ -29,8 +33,11 @@ open class Adapter<T : ViewTyped>(private val items: MutableList<ViewTyped> = mu
     override fun onBindViewHolder(holder: BaseViewHolder<ViewTyped>, position: Int) = holder.bind(items[position])
 
     fun setItems(items: List<T>) {
-        this.items.clear()
-        this.items.addAll(items)
+        if (items.isEmpty()) showEmptyList()
+        else {
+            this.items.clear()
+            this.items.addAll(items)
+        }
         notifyDataSetChanged()
     }
 

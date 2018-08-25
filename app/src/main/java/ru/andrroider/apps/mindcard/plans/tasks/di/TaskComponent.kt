@@ -14,6 +14,7 @@ import ru.andrroider.apps.mindcard.plans.tasks.TasksHolderFactory
 import ru.andrroider.apps.mindcard.plans.tasks.TasksPresenter
 import ru.andrroider.apps.mindcard.widget.createDeleteConfirmationDialog
 import ru.andrroider.apps.mindcard.widget.recyclerView.Adapter
+import ru.andrroider.apps.mindcard.widget.recyclerView.EmptyView
 
 class TaskComponent(private val activity: Activity?,
                     private val tasksPresenter: TasksPresenter,
@@ -52,6 +53,6 @@ class TaskComponent(private val activity: Activity?,
             }
         }
     }
-    val adapter = Adapter<TaskUi>(tasksItems,
+    val adapter = Adapter<TaskUi>(tasksItems, EmptyView(R.layout.item_empty_tasks),
                                   holderFactory = TasksHolderFactory(onCardClickListener, onCardLongClickListener))
 }

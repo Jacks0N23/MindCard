@@ -1,32 +1,31 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--<com.alamkanak.weekview.WeekView-->
-    <!--android:id="@+id/weekView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--app:columnGap="8dp"-->
-    <!--app:dayBackgroundColor="#05000000"-->
-    <!--app:eventTextColor="@android:color/white"-->
-    <!--app:headerColumnBackground="@color/timeline_background"-->
-    <!--app:headerColumnPadding="5dp"-->
-    <!--app:headerColumnTextColor="@color/secondary_text"-->
-    <!--app:headerRowBackgroundColor="@color/timeline_background"-->
-    <!--app:headerRowPadding="12dp"-->
-    <!--app:hourHeight="60dp"-->
-    <!--app:noOfVisibleDays="3"-->
-    <!--app:textSize="12sp"-->
-    <!--app:todayBackgroundColor="#21ff5252"-->
-    <!--app:todayHeaderTextColor="@color/accent_material_light" />-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="@string/app_name" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <com.alamkanak.weekview.WeekView
         android:id="@+id/weekView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
         app:columnGap="8dp"
         app:dayBackgroundColor="#05000000"
         app:eventTextColor="@android:color/white"
@@ -36,12 +35,13 @@
         app:headerRowBackgroundColor="@color/timeline_background"
         app:headerRowPadding="12dp"
         app:hourHeight="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:noOfVisibleDays="3"
         app:nowLineColor="@color/now_line"
         app:nowLineThickness="3dp"
         app:showNowLine="true"
         app:textSize="12sp"
         app:todayBackgroundColor="#1848adff"
-        app:todayHeaderTextColor="@color/accent_material_light" />
+        app:todayHeaderTextColor="@color/todayHeaderTextColor" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
