@@ -26,6 +26,6 @@ abstract class BaseMvpActivity(private val layoutId: Int) : MvpAppCompatActivity
     override fun onBackPressed() {
         onActivityBackPressed?.onBackPressed()?.run {
             if (this) super.onBackPressed()
-        }
+        } ?: super.onBackPressed()
     }
 }
